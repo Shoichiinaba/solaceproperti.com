@@ -1,0 +1,44 @@
+.DS_Store
+
+application/cache/*
+!application/cache/index.html
+
+application/logs/*
+!application/logs/index.html
+
+!application/*/.htaccess
+
+composer.lock
+# kina3126_e-iuran.sql
+# tests/mocks/database/ci_test.sqlite
+
+user_guide_src/build/*
+user_guide_src/cilexer/build/*
+user_guide_src/cilexer/dist/*
+user_guide_src/cilexer/pycilexer.egg-info/*
+# /upload/
+# /vr/
+# /vendor/
+# /composer.json/
+# /composer.lock/
+# /assets/
+# /.htaccess/
+# /index.php/
+# /ror.xml/
+# /sitemap.html/
+# /sitemap.xml/
+# /utllist.txt/
+
+# IDE Files
+#-------------------------
+/nbproject/
+.idea/*
+
+## Sublime Text cache files
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+/tests/tests/
+/tests/results/
