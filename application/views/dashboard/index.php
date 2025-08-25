@@ -35,7 +35,7 @@
     </section>
     <section class="container pt-0">
         <div class="row mt-4">
-            <ul class="ul-lans col-sm-6">
+            <ul class="ul-lans col-sm-6 col-lg-12">
                 <li class="text-webkit-center mx-w-li mb-4">
                     <a href="<?= base_url('Properti/jualsewa/rumah/'); ?>">
                         <div class="border-li bi i-home"></div>
