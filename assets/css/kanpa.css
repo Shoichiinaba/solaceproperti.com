@@ -1548,12 +1548,21 @@ span.select2-container {
     .spn-vw-all {
         display: block;
     }
+    .f-sz-li-porperti {
+        font-size: 10px !important;
+    }
 
     .ul-lans {
         grid-template-columns: repeat(4, 2fr);
         display: grid;
         justify-content: center;
         margin-top: 6px;
+    }
+
+    .tov{
+        padding-top: 22px !important;
+        padding-bottom: 12px !important;
+        font-size: 10px !important;
     }
 }
 
