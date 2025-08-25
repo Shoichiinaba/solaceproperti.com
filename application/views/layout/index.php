@@ -10,9 +10,9 @@
     <meta name="msvalidate.01" content="B36B1215CB3BC26AA0E6851087FF5E2F" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-dns-prefetch-control" content="on">
-    <meta name="theme-color" content="#1a44b2"> <!-- Chrome Android -->
-    <meta name="apple-mobile-web-app-status-bar-style" content="#1a44b2"> <!-- Safari iOS -->
-    <meta name="msapplication-navbutton-color" content="#1a44b2"> <!-- Microsoft Edge -->
+    <meta name="theme-color" content="#05382e"> <!-- Chrome Android -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#05382e"> <!-- Safari iOS -->
+    <meta name="msapplication-navbutton-color" content="#05382e"> <!-- Microsoft Edge -->
 
     <!-- SEO -->
     <?php
