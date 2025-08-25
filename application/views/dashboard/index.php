@@ -34,8 +34,8 @@
         </div>
     </section>
     <section class="container pt-0">
-        <div class="mt-4 m-2">
-            <ul class="ul-lans">
+        <div class="row mt-4">
+            <ul class="ul-lans col-sm-6">
                 <li class="text-webkit-center mx-w-li mb-4">
                     <a href="<?= base_url('Properti/jualsewa/rumah/'); ?>">
                         <div class="border-li bi i-home"></div>
@@ -71,7 +71,7 @@
                     <a href="<?= base_url('Properti/takeover/'); ?>#dijual">
                         <div class="i-titip-jual border-li"></div>
                         <p class="font-weight-bold text-black f-sz-li-porperti mb-0">Pindah KPR</p>
-                        <span class="font-weight-bold text-black f-sz-li-porperti mt-0">(Take Over)</span>
+                        <span class="font-weight-bold text-black f-sz-li-porperti tov">(Take Over)</span>
                     </a>
                 </li>
                 <li class="text-webkit-center mx-w-li mb-4">
