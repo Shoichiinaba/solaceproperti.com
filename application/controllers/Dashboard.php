@@ -321,7 +321,7 @@ class Dashboard extends CI_Controller
 						'<div class="bg-light border p-2">' .
 						'<span class="title-new-proyek">' . htmlspecialchars($populer['nama_type'], ENT_QUOTES, 'UTF-8') . '</span>' .
 						'<span class="title-tayang">Tayang sejak ' . htmlspecialchars($formattedDate, ENT_QUOTES, 'UTF-8') . '</span>' .
-						'<h3 class="title-price">Rp ' . number_format($populer['harga'], 2, ',', '.') . ' ' . htmlspecialchars($populer['satuan'], ENT_QUOTES, 'UTF-8') . '</h3>' .
+						'.<h3 class="title-price">Rp ' . $populer['harga']. ' ' . htmlspecialchars($populer['satuan'], ENT_QUOTES, 'UTF-8') . '-an</h3>.' .
 						'<h5 class="title-properti text-black font-weight-bold">' . htmlspecialchars($populer['judul_properti'], ENT_QUOTES, 'UTF-8') . '</h5>' .
 						'<h6 class="font-weight-bold title-address"><i class="bi bi-geo-alt"></i> ' . htmlspecialchars($populer['alamat'], ENT_QUOTES, 'UTF-8') . '</h6>' .
 						'<ul class="d-flex ul-detail mt-3">' .

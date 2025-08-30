@@ -10,11 +10,16 @@ body {
 
 /* code custom header */
 /* Latar hijau gradasi */
+
 .header {
     background: linear-gradient(to right, #052c23, #076355);
     padding: 10px 0;
     color: #f6d76f;
-    z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
 }
 
 /* Logo */
@@ -23,6 +28,34 @@ body {
 }
 
 /* Navbar menu */
+.custom-nav {
+    position: absolute;
+    position: absolute;
+    top: 49%;
+    left: 40%;
+    width: 3%;
+    display: grid;
+    justify-content: end;
+    transform: translateY(-50%);
+    z-index: 9999;
+}
+
+.custom-nav .btn-swiper-re-vi {
+    background-color: #c5d0eb57;
+    color: #1a44b2;
+    border: 2px solid #ffffff;
+    border-radius: 23px;
+    cursor: pointer;
+    font-size: 25px;
+    margin: 1rem auto;
+    height: 36px;
+    width: 35px;
+}
+
+.custom-nav .btn-swiper-re-vi:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 .navbar ul li a {
     color: #f6d76f !important;
     font-weight: bold;
@@ -1763,11 +1796,6 @@ footer .footer-cat,
     font-family: 'Poppins';
 }
 
-/* .size-img-bs {
-    max-height: 21rem;
-    width: 100%;
-} */
-
 .text-nm-perum-bs {
     /* font-weight: bold; */
     font-family: 'Poppins';
@@ -1783,8 +1811,6 @@ footer .footer-cat,
     font-size: 10px;
 }
 
-
-
 @media (max-width: 992px) {
     .btn-tipe-bs {
         font-size: 10px;
@@ -1793,11 +1819,6 @@ footer .footer-cat,
     .btn-hrg-dash-bs {
         font-size: 10px;
     }
-
-    /* .size-img-bs {
-        max-height: 13rem !important;
-        min-height: 13rem !important;
-    } */
 
     .text-nm-perum-bs {
         font-size: 20px;
@@ -1894,7 +1915,7 @@ footer .footer-cat,
     width: 100%;
     height: auto;
     object-fit: cover;
-    border-radius: 12px;
+    border-radius: 1px;
 }
 .mySwiper .swiper-slide {
     position: relative;
@@ -1907,7 +1928,7 @@ footer .footer-cat,
     height: 85vh; /* Sesuaikan, 45vh terlihat seperti di gambar Anda */
     position: relative;
     overflow: hidden;
-    margin-bottom: -100px;
+    margin-bottom: -119px;
 }
 
 .swiper-container-banner .swiper {
@@ -1945,16 +1966,10 @@ footer .footer-cat,
      height: 28% !important;
 }
 
-@media (max-width: 768px) {
-    .swiper-container-banner {
-        height: 35vh;
-    }
-}
-
 /* Untuk form pencarian di atas swiper */
 .search-overlay {
     position: absolute;
-    top: 60%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
