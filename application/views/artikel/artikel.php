@@ -99,7 +99,7 @@
                         <a class="text-dark add-view-news"
                             href="<?php echo base_url('Artikel'); ?>/page/<?php echo $tittle_news; ?>"
                             data-id-berita="<?php echo $data['id_berita']; ?>">
-                            <img src="https://admin.kanpa.co.id/upload/article/<?php echo $data['foto_berita']; ?>"
+                            <img src="https://admin.solaceproperti.com/upload/article/<?php echo $data['foto_berita']; ?>"
                                 class="img-fluid border-radius img-berita" alt="red sample">
                             <h6 class="text-publishing"><?php echo $data['tgl_berita']; ?></h6>
                             <h6 class="tittle-news resp-tittle"><?php echo $data['judul_berita']; ?></h6>
@@ -119,7 +119,7 @@
                         <a class="text-dark add-view-news"
                             href="<?php echo base_url('Artikel'); ?>/page/<?php echo $tittle_news; ?>"
                             data-id-berita="<?php echo $data['id_berita']; ?>">
-                            <img src="https://admin.kanpa.co.id/upload/article/<?php echo $data['foto_berita']; ?>"
+                            <img src="https://admin.solaceproperti.com/upload/article/<?php echo $data['foto_berita']; ?>"
                                 class="img-fluid border-radius img-berita"
                                 data-id-berita="<?php echo $data['id_berita']; ?>" alt="red sample">
                             <h3 style="font-family: auto;"><?php echo $data['judul_berita']; ?></h3>

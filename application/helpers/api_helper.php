@@ -62,6 +62,7 @@ if (!function_exists('get_properti_populer')) {
         return $properti_populer;
     }
 }
+// untuk menambah viewer
 
 if (!function_exists('update_viewer_properti')) {
     function update_viewer_properti($id_properti)
@@ -70,23 +71,28 @@ if (!function_exists('update_viewer_properti')) {
         $CI->load->config('api');
         $api_key = $CI->config->item('api_key');
 
-        $api_url = 'https://admin.solaceproperti.com/Api/properti/' . $id_properti;
+        $api_url = 'https://admin.solaceproperti.com/Api/properti';
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $api_url);
+        $data = http_build_query([
+            'id_properti' => $id_properti
+        ]);
+
+        $ch = curl_init($api_url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'X-API-KEY: ' . $api_key,
-            'Content-Type: application/json'
-        ));
+            'Content-Type: application/x-www-form-urlencoded',
+            'Content-Length: ' . strlen($data)
+        ]);
 
         $response = curl_exec($ch);
 
         if (curl_errno($ch)) {
-            log_message('error', 'cURL Error: ' . curl_error($ch));
+            log_message('error', 'cURL Error update_viewer_properti: ' . curl_error($ch));
             curl_close($ch);
-            return false;
+            return ['status' => 'fail', 'message' => 'Curl error'];
         }
 
         curl_close($ch);

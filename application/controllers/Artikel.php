@@ -217,136 +217,113 @@ class Artikel extends CI_Controller
 
 	function data_tag()
 	{
-		// Call the helper function to get the article data
 		$artikel = get_artikel();
-
-		// Initialize an empty array for grouping
 		$grouped_by_tag = [];
 
-		// Check if the article data was fetched successfully
 		if (is_array($artikel) && !empty($artikel)) {
-			// Loop through each article
 			foreach ($artikel as $row) {
-				// Assuming each article has a 'tag_berita' field
-				$tags = explode(',', $row['tag_berita']); // Split tags by comma
+				$tags = explode(',', $row['tag_berita']);
 
-				// Loop through each tag and group articles by tag
 				foreach ($tags as $tag) {
-					$tag = trim($tag); // Remove any whitespace
-					// Initialize the tag array if not already set
+					$tag = trim($tag);
+
 					if (!isset($grouped_by_tag[$tag])) {
 						$grouped_by_tag[$tag] = [];
 					}
-					// Add the article to the tag group
 					$grouped_by_tag[$tag][] = $row;
 				}
 			}
 		}
 
-		// Return the grouped data
 		return $grouped_by_tag;
 	}
 
 
-	function page()
+	public function page()
 	{
-		$judul_artikel = preg_replace("![^a-z0-9]+!i", " ", $this->uri->segment(3));
+		// Ambil judul artikel dari URL segment ke-3, ubah ke slug
+		$judul_artikel = $this->slugify($this->uri->segment(3));
+
 		$get_artikel = get_artikel();
+		$meta_desk = '';
+		$meta_foto = '';
+		$tag_berita = '';
 
 		if (is_array($get_artikel)) {
-			// Filter articles based on $judul_artikel
-			$filtered_properties = array_filter($get_artikel, function ($fillter_artikel) use ($judul_artikel) {
-				return strtolower($fillter_artikel['judul_berita']) == strtolower($judul_artikel);
+			// Filter artikel berdasarkan slug judul
+			$filtered_properties = array_filter($get_artikel, function ($artikel) use ($judul_artikel) {
+				return $this->slugify($artikel['judul_berita']) === $judul_artikel;
 			});
+
 			foreach ($filtered_properties as $meta) {
-				$meta_desk = $meta['meta_desk'];
-				$meta_foto = $meta['meta_foto'];
-				$tag_berita = $meta['tag_berita'];
+				$meta_desk = $meta['meta_desk'] ?? '';
+				$meta_foto = $meta['meta_foto'] ?? '';
+				$tag_berita = $meta['tag_berita'] ?? '';
 			}
 		}
+
 		// meta primary
-		$data['_title'] = '$judul_artikel';
-		$data['_description'] = 'Kanpa.co.id ' . $judul_artikel . ' - ' . $meta_desk;
-		$data['_keyword'] = 'artikel ' . $tag_berita . ', ' . $judul_artikel;
+		$data['_title']       = $this->uri->segment(3); // tampilkan judul asli dari URL
+		$data['_description'] = 'Kanpa.co.id ' . $this->uri->segment(3) . ' - ' . $meta_desk;
+		$data['_keyword']     = 'artikel ' . $tag_berita . ', ' . $this->uri->segment(3);
+
 		// meta facebook
-		$data['_title_fb'] = $judul_artikel;
-		$data['_description_fb'] = 'Kanpa.co.id ' . $judul_artikel . ' - ' . $meta_desk;
-		// meta tiwitter
-		$data['_title_tw'] = $judul_artikel;
-		$data['_description_tw'] = 'Kanpa.co.id ' . $judul_artikel . ' - ' . $meta_desk;
+		$data['_title_fb']       = $this->uri->segment(3);
+		$data['_description_fb'] = 'Kanpa.co.id ' . $this->uri->segment(3) . ' - ' . $meta_desk;
 
-		$data['_meta_foto'] =  'https://admin.solaceproperti.com/upload/article/' . $meta_foto;
-		$data['_url'] = base_url('Artikel/page/') . preg_replace("![^a-z0-9]+!i", "-", $judul_artikel);
+		// meta twitter
+		$data['_title_tw']       = $this->uri->segment(3);
+		$data['_description_tw'] = 'Kanpa.co.id ' . $this->uri->segment(3) . ' - ' . $meta_desk;
 
+		$data['_meta_foto'] = 'https://admin.solaceproperti.com/upload/article/' . $meta_foto;
+		$data['_url']       = base_url('Artikel/page/') . $judul_artikel;
 
-		$data['_script'] = 'artikel/artikel_js';
-		$data['_view'] = 'artikel/page_artikel';
-		$data['detail_artikel'] = $this->get_detail_artikel($judul_artikel);
-		$data['properti'] = $this->data_properti();
-		$data['data_tag'] = $this->data_tag();
+		$data['_script']         = 'artikel/artikel_js';
+		$data['_view']           = 'artikel/page_artikel';
+		$data['detail_artikel']  = $this->get_detail_artikel($judul_artikel);
+		$data['properti']        = $this->data_properti();
+		$data['data_tag']        = $this->data_tag();
+
 		$this->load->view('layout/index', $data);
 	}
 
-	function get_detail_artikel($judul_artikel)
+	/**
+	 * Helper untuk ubah string jadi slug
+	 */
+	private function slugify($string)
+	{
+		$string = strtolower($string);
+		$string = preg_replace('![^a-z0-9]+!i', '-', $string);
+		return trim($string, '-');
+	}
+
+	/**
+	 * Ambil detail artikel berdasarkan slug judul
+	 */
+	private function get_detail_artikel($judul_slug)
 	{
 		$get_artikel = get_artikel();
 		$output = '';
-		$id_berita = null; // default untuk mencegah undefined
 
 		if (is_array($get_artikel)) {
-			// Filter artikel berdasarkan judul
-			$filtered_properties = array_filter($get_artikel, function ($artikel) use ($judul_artikel) {
-				return strtolower($artikel['judul_berita']) == strtolower($judul_artikel);
+			$filtered = array_filter($get_artikel, function ($artikel) use ($judul_slug) {
+				return $this->slugify($artikel['judul_berita']) === $judul_slug;
 			});
 
-			foreach ($filtered_properties as $artikel) {
-				$id_berita = $artikel['id_berita'] ?? null;
-				$output .= '<img src="https://admin.solaceproperti.com/upload/article/' . ($artikel['foto_berita'] ?? '') . '" class="img-fluid border-radius img-berita" data-id-berita="' . ($artikel['id_berita'] ?? '') . '" alt="red sample">'
-						. '<span class="float-right">' . ($artikel['tgl_berita'] ?? '') . '</span>'
-						. '<hr>'
-						. '<h3 style="font-family: auto;">' . ($artikel['judul_berita'] ?? '') . '</h3>';
+			if (empty($filtered)) {
+				return '<p style="color:red;">Artikel tidak ditemukan: ' . htmlspecialchars($judul_slug) . '</p>';
 			}
-		}
 
-		// Kalau tidak ada ID berita, langsung return
-		if (!$id_berita) {
-			return $output;
-		}
-
-		$get_data_artikel = get_data_artikel();
-
-		if (is_array($get_data_artikel)) {
-			// Sort descending berdasarkan id_data_berita
-			usort($get_data_artikel, function ($a, $b) {
-				return $b['id_data_berita'] <=> $a['id_data_berita'];
-			});
-
-			// Filter artikel detail berdasarkan berita_id
-			$filtered_properties = array_filter($get_data_artikel, function ($artikel) use ($id_berita) {
-				return $artikel['berita_id'] == $id_berita;
-			});
-
-			// Gabungkan konten artikel detail
-			foreach ($filtered_properties as $artikel) {
-				if (!empty($artikel['file_foto_berita'])) {
-					$output .= '<div class="gallery__content--flow"><figure>'
-							. '    <img src="https://admin.solaceproperti.com/upload/article/' . $artikel['file_foto_berita'] . '" class="img-grid-news">'
-							. '    <figcaption class="header__caption" role="presentation">'
-							. '        <h2 class="title title--secondary"></h2>'
-							. '    </figcaption>'
-							. '</figure></div>';
-				}
-
-				$output .= $artikel['text_berita'] ?? '';
-
-				if (!empty($artikel['file_foto_btn'])) {
-					$link_btn = $artikel['link_btn'] ?? '#';
-					$output .= '<center>'
-							. '    <a href="' . $link_btn . '" target="_blank">'
-							. '        <img src="https://admin.solaceproperti.com/upload/article/' . $artikel['file_foto_btn'] . '" class="img-fluid" alt="" style="width: 25rem;">'
-							. '    </a>'
-							. '</center>';
-				}
+			foreach ($filtered as $artikel) {
+				$output .= '
+					<img src="https://admin.solaceproperti.com/upload/article/' . ($artikel['foto_berita'] ?? '') . '"
+						class="img-fluid border-radius img-berita"
+						data-id-berita="' . ($artikel['id_berita'] ?? '') . '"
+						alt="' . htmlspecialchars($artikel['judul_berita'] ?? '') . '">
+					<span class="float-right">' . ($artikel['tgl_berita'] ?? '') . '</span>
+					<hr>
+					<h3 style="font-family: auto;">' . ($artikel['judul_berita'] ?? '') . '</h3>
+				';
 			}
 		}
 

@@ -370,4 +370,59 @@ $(document).ready(function() {
     });
 
 });
+
+// code untuk klik menambah viewer artikel
+$(document).on('click', '.add-view-news', function(e) {
+    var id = $(this).data('id-berita');
+
+    $.ajax({
+        url: "<?php echo base_url('Dashboard/add_viewer'); ?>",
+        method: "POST",
+        data: {
+            id_berita: id
+        },
+        success: function(res) {
+            try {
+                var data = JSON.parse(res);
+                if (data.status === 'success') {
+                    console.log("Viewer updated: " + data.data.view_berita);
+                } else {
+                    console.log("Gagal update viewer:", data.message);
+                }
+            } catch (e) {
+                console.error("Invalid JSON:", res);
+            }
+        }
+    });
+});
+
+// code untuk klik menambah viewer properti
+$(document).on('click', '.view-properti', function(e) {
+    var id = $(this).data('id-properti');
+
+    // Update viewer ke server
+    $.ajax({
+        url: "<?php echo base_url('Dashboard/add_viewer_properti'); ?>",
+        method: "POST",
+        data: {
+            id_properti: id
+        },
+        success: function(res) {
+            try {
+                var data = JSON.parse(res);
+                if (data.status === 'success') {
+                    // Cari counter sesuai ID
+                    var counter = $('[data-viewer-target="' + id + '"]');
+                    if (counter.length) {
+                        var current = parseInt(counter.text().replace(/\D/g, '')) || 0;
+                        counter.html('<i class="bi bi-eye"></i> ' + (current + 1).toLocaleString(
+                            'id-ID'));
+                    }
+                }
+            } catch (e) {
+                console.error("Invalid JSON:", res);
+            }
+        }
+    });
+});
 </script>

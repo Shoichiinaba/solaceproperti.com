@@ -4,108 +4,136 @@ defined('BASEPATH') or exit('No direct script access allowed');
 if (!function_exists('get_artikel')) {
     function get_artikel()
     {
-        // Load CodeIgniter instance to access the config
         $CI = &get_instance();
-        // Load the API config (if it's not auto-loaded)
         $CI->load->config('api');
-        // Get the API key from the config file
-        $api_key = $CI->config->item('api_key'); // Assuming it's stored in the config
+        $api_key = $CI->config->item('api_key');
 
-        // API URL
         $api_url = 'https://admin.solaceproperti.com/Api/article';
-
-        // Initialize cURL session
         $ch = curl_init();
-
-        // Set the URL
-        curl_setopt($ch, CURLOPT_URL, $api_url);
-
-        // Return the transfer as a string instead of outputting it directly
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Add the API key header
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'X-API-KEY: ' . $api_key
-        ));
-
-        // Execute the cURL request
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => ['X-API-KEY: ' . $api_key],
+        ]);
         $response = curl_exec($ch);
 
-        // Check for errors
         if (curl_errno($ch)) {
-            // Handle error
-            $error_msg = curl_error($ch);
-            echo "cURL Error: $error_msg";
-            return false;
-        } else {
-            // Decode the JSON response into an associative array
-            $artikel = json_decode($response, true);
-
-            // Close cURL session
+            // echo "cURL Error: " . curl_error($ch); // optional debug
             curl_close($ch);
-
-            // Sort the articles by 'id_berita' in descending order
-            if (!empty($artikel) && is_array($artikel)) {
-                usort($artikel, function ($a, $b) {
-                    return $b['id_berita'] <=> $a['id_berita'];
-                });
-            }
-
-            return $artikel;
+            return [];
         }
+        curl_close($ch);
+
+        $decoded = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) return [];
+
+        // Normalisasi berbagai bentuk respons
+        $list = [];
+        if (isset($decoded['data']) && is_array($decoded['data'])) {
+            $list = $decoded['data'];
+        } elseif (isset($decoded[1]) && is_array($decoded[1])) {
+            $list = $decoded[1];
+        } elseif (is_array($decoded) && isset($decoded[0]) && is_array($decoded[0])) {
+            // fallback: mungkin langsung array artikel
+            $list = $decoded;
+        }
+
+        // HANYA ambil item yang benar-benar artikel
+        $list = array_values(array_filter($list, function ($row) {
+            return is_array($row) && isset($row['id_berita']);
+        }));
+
+        // Sort descending by id_berita (aman walau string)
+        if (!empty($list)) {
+            usort($list, function ($a, $b) {
+                return (int)$b['id_berita'] <=> (int)$a['id_berita'];
+            });
+        }
+
+        return $list;
     }
 }
+
+// mengambil data artikel
 if (!function_exists('get_data_artikel')) {
     function get_data_artikel()
     {
-        // Load CodeIgniter instance to access the config
         $CI = &get_instance();
-        // Load the API config (if it's not auto-loaded)
         $CI->load->config('api');
-        // Get the API key from the config file
-        $api_key = $CI->config->item('api_key'); // Assuming it's stored in the config
+        $api_key = $CI->config->item('api_key');
 
-        // API URL
         $api_url = 'https://admin.solaceproperti.com/Api/data_article';
-
-        // Initialize cURL session
         $ch = curl_init();
-
-        // Set the URL
-        curl_setopt($ch, CURLOPT_URL, $api_url);
-
-        // Return the transfer as a string instead of outputting it directly
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        // Add the API key header
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-            'X-API-KEY: ' . $api_key
-        ));
-
-        // Execute the cURL request
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => ['X-API-KEY: ' . $api_key],
+        ]);
         $response = curl_exec($ch);
 
-        // Check for errors
         if (curl_errno($ch)) {
-            // Handle error
-            $error_msg = curl_error($ch);
-            echo "cURL Error: $error_msg";
-            return false;
-        } else {
-            // Decode the JSON response into an associative array
-            $data_artikel = json_decode($response, true);
-
-            // Close cURL session
+            // echo "cURL Error: " . curl_error($ch); // optional debug
             curl_close($ch);
-
-            // Sort the articles by 'id_berita' in descending order
-            // if (!empty($data_artikel) && is_array($data_artikel)) {
-            //     usort($data_artikel, function ($a, $b) {
-            //         return $b['id_berita'] <=> $a['id_berita'];
-            //     });
-            // }
-
-            return $data_artikel;
+            return [];
         }
+        curl_close($ch);
+
+        $decoded = json_decode($response, true);
+        if (json_last_error() !== JSON_ERROR_NONE) return [];
+
+        $list = [];
+        if (isset($decoded['data']) && is_array($decoded['data'])) {
+            $list = $decoded['data'];
+        } elseif (isset($decoded[1]) && is_array($decoded[1])) {
+            $list = $decoded[1];
+        } elseif (is_array($decoded) && isset($decoded[0]) && is_array($decoded[0])) {
+            $list = $decoded;
+        }
+
+        // Filter hanya item valid
+        $list = array_values(array_filter($list, function ($row) {
+            return is_array($row) && isset($row['id_berita']);
+        }));
+
+        return $list;
     }
+
+    // untuk menjalankan PUT agar data viewer bisa bertambah
+
+    if (!function_exists('update_view_artikel')) {
+    function update_view_artikel($id_berita)
+    {
+        $CI = &get_instance();
+        $CI->load->config('api');
+        $api_key = $CI->config->item('api_key');
+
+        $api_url = 'https://admin.solaceproperti.com/Api/article';
+
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $api_url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => 'PUT',
+            CURLOPT_HTTPHEADER => [
+                'X-API-KEY: ' . $api_key,
+                'Content-Type: application/x-www-form-urlencoded'
+            ],
+            CURLOPT_POSTFIELDS => http_build_query([
+                'id_berita' => $id_berita
+            ])
+        ]);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            curl_close($ch);
+            return ['status' => 'fail', 'message' => curl_error($ch)];
+        }
+
+        curl_close($ch);
+
+        return json_decode($response, true);
+    }
+}
+
 }

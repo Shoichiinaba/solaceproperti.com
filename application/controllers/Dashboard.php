@@ -205,11 +205,15 @@ class Dashboard extends CI_Controller
 			// Generate HTML item
 			$populer_html .= '<li class="img-item col-6 p-2 pb-3">
 				<div class="populer-container">
-					<a href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $populer['judul_properti']) . '/tipe/' . $populer['luas_tanah'] . '/' . $populer['luas_bangunan'] . '">
+					<a class="view-properti"
+   						data-id-properti="' . $populer['id_properti'] . '" href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $populer['judul_properti']) . '/tipe/' . $populer['luas_tanah'] . '/' . $populer['luas_bangunan'] . '" >
 						<div class="populer-content">
 							<img src="https://admin.solaceproperti.com/upload/gambar_properti/' . htmlspecialchars($firstGambar, ENT_QUOTES, 'UTF-8') . '" class="img-produk-sw">
 							' . $html_ribbon . '
-							<div class="viewer-count" style="position:absolute; top:5px; right:5px; background:rgba(0,0,0,0.6); color:#fff; padding:3px 8px; border-radius:12px; font-size:12px;">
+
+							<div class="viewer-count"
+								data-viewer-target="' . $populer['id_properti'] . '"
+								style="position:absolute; top:5px; right:5px; background:rgba(0,0,0,0.6); color:#fff; padding:3px 8px; border-radius:12px; font-size:12px;">
 								<i class="bi bi-eye"></i> ' . number_format($viewerCount, 0, ',', '.') . '
 							</div>
 						</div>
@@ -313,7 +317,7 @@ class Dashboard extends CI_Controller
 					// Generate HTML
 					$populer_html .= '<li class="img-item col-6 p-2 pb-3">' .
 						'<div class="populer-container">' .
-						'<a href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $populer['judul_properti']) . '/tipe/' . $populer['luas_tanah'] . '/' . $populer['luas_bangunan'] . '">' .
+						'<a class="view-properti" data-id-properti="' . $populer['id_properti'] . '" href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $populer['judul_properti']) . '/tipe/' . $populer['luas_tanah'] . '/' . $populer['luas_bangunan'] . '">' .
 						'<div class="populer-content">' .
 						'<img src="https://admin.solaceproperti.com/upload/gambar_properti/' . htmlspecialchars($firstGambar, ENT_QUOTES, 'UTF-8') . '" class="img-produk-sw">' .
 						$html_ribbon .
@@ -414,7 +418,7 @@ class Dashboard extends CI_Controller
 			$artikel_subset = array_slice($artikel, $start, $limit);
 
 			if (empty($artikel_subset)) {
-				echo "No more data available";
+				echo "Tidak ada Data Artikel Lagi!!";
 			} else {
 				foreach ($artikel_subset as $row) {
 					$judul_berita = $row['judul_berita'];
@@ -448,5 +452,31 @@ class Dashboard extends CI_Controller
 			}
 		}
 	}
+
+
+	public function add_viewer_properti()
+	{
+		$id = $this->input->post('id_properti');
+		if (!$id) {
+			echo json_encode(['status' => 'fail', 'message' => 'ID properti tidak ada']);
+			return;
+		}
+
+		$result = update_viewer_properti($id);
+		echo json_encode($result);
+	}
+
+	public function add_viewer()
+	{
+		$id = $this->input->post('id_berita');
+		if (!$id) {
+			echo json_encode(['status' => 'fail', 'message' => 'ID tidak ada']);
+			return;
+		}
+
+		$result = update_view_artikel($id);
+		echo json_encode($result);
+	}
+
 
 }

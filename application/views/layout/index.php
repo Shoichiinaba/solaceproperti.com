@@ -71,7 +71,7 @@
 
 
     <meta property="og:url" content="<?= getCurrentUrl(); ?>" />
-    <meta property="og:site_name" content="Kanpa.co.id - Marketplace Properti Terpercaya" />
+    <meta property="og:site_name" content="Solaceproperti.com - Marketplace Properti Terpercaya" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -85,7 +85,7 @@
     <meta name="twitter:description" content="<?= $_description_tw; ?>" />
     <?php } else { ?>
     <meta name="twitter:description"
-        content="Cari properti ideal Anda dengan mudah di Kanpa.co.id. Jual dan sewa rumah, perumahan, ruko, dan kavling di seluruh Indonesia." />
+        content="Cari properti ideal Anda dengan mudah di Solaceproperti.com. Jual dan sewa rumah, perumahan, ruko, dan kavling di seluruh Indonesia." />
     <?php } ?>
     <?php if (isset($_meta_foto)) { ?>
     <meta name="twitter:image" content="<?= $_meta_foto; ?>" />
@@ -302,29 +302,6 @@
         });
     })
     </script>
-    <!-- <script>
-        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-        // Windows Phone must come first because its UA also contains "Android"
-        if (/windows phone/i.test(userAgent)) {
-            console.log("Windows Phone");
-            $('.device').text("Windows Phone");
-        }
-
-        if (/android/i.test(userAgent)) {
-            console.log("Android");
-            $('.device').text("Android");
-        }
-
-        // iOS detection from: http://stackoverflow.com/a/9039885/177710
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-            console.log("iOS");
-            $('.device').text("iOS");
-        }
-
-        console.log("unknown");
-        $('.device').text("unknown");
-    </script> -->
     <script>
 
     </script>
@@ -446,16 +423,6 @@
         });
         // this will get the full URL at the address bar
     });
-    // var prevScrollpos = window.pageYOffset;
-    // window.onscroll = function() {
-    //     var currentScrollPos = window.pageYOffset;
-    //     if (prevScrollpos > currentScrollPos) {
-    //         document.getElementById("header").style.top = "0";
-    //     } else {
-    //         document.getElementById("header").style.top = "-50px";
-    //     }
-    //     prevScrollpos = currentScrollPos;
-    // }
     </script>
 
 </body>
