@@ -18,15 +18,15 @@ class Simulasi_KPR extends CI_Controller
     {
 
         // meta primary
-		$data['_title'] = 'Simulasi KPR Terbaik 2024 | Hitung Cicilan KPR Rumah di Kanpa.co.id';
-		$data['_description'] = "Gunakan simulasi KPR Kanpa.co.id untuk menghitung cicilan rumah impian Anda. Dapatkan perhitungan KPR rumah terbaik dengan suku bunga kompetitif di seluruh Indonesia.";
+		$data['_title'] = 'Simulasi KPR Terbaik 2024 | Hitung Cicilan KPR Rumah di solaceproperti.com';
+		$data['_description'] = "Gunakan simulasi KPR solaceproperti.com untuk menghitung cicilan rumah impian Anda. Dapatkan perhitungan KPR rumah terbaik dengan suku bunga kompetitif di seluruh Indonesia.";
         $data['_keyword']="simulasi KPR, KPR rumah, kalkulator KPR, hitung cicilan rumah, suku bunga KPR, kredit pemilikan rumah, cicilan KPR, KPR bank, simulasi kredit rumah, KPR 2024, perhitungan KPR, KPR terbaik, cicilan rumah murah, KPR Indonesia, perhitungan kredit rumah, bunga KPR, KPR rumah murah, pengajuan KPR, KPR online, KPR rumah idaman, perhitungan cicilan rumah, KPR cepat, KPR fleksibel, simulasi KPR 2024, kredit rumah murah";
 		// meta facebook
-		$data['_title_fb'] = "Simulasi KPR Terbaik 2024 - Hitung Cicilan KPR Rumah di Kanpa.co.id";
-		$data['_description_fb'] = "Temukan kemudahan menghitung cicilan KPR rumah dengan simulasi KPR Kanpa.co.id. Dapatkan hasil perhitungan KPR sesuai kebutuhan Anda dengan suku bunga kompetitif.";
+		$data['_title_fb'] = "Simulasi KPR Terbaik 2024 - Hitung Cicilan KPR Rumah di solaceproperti.com";
+		$data['_description_fb'] = "Temukan kemudahan menghitung cicilan KPR rumah dengan simulasi KPR solaceproperti.com. Dapatkan hasil perhitungan KPR sesuai kebutuhan Anda dengan suku bunga kompetitif.";
 		// meta tiwitter
-		$data['_title_tw'] = "Simulasi KPR Terbaik 2024 - Hitung Cicilan KPR Rumah di Kanpa.co.id";
-		$data['_description_tw'] = "Gunakan kalkulator KPR untuk menghitung cicilan rumah sesuai kemampuan Anda. Simulasi KPR cepat dan akurat di Kanpa.co.id.";
+		$data['_title_tw'] = "Simulasi KPR Terbaik 2024 - Hitung Cicilan KPR Rumah di solaceproperti.com";
+		$data['_description_tw'] = "Gunakan kalkulator KPR untuk menghitung cicilan rumah sesuai kemampuan Anda. Simulasi KPR cepat dan akurat di solaceproperti.com";
 
         // Call the get_banner_properti function to get the banners
         $banner_properti = get_banner_properti();

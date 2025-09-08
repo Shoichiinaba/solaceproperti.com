@@ -356,8 +356,8 @@ class Artikel extends CI_Controller
 	public function get_berita_tag()
 	{
 		$tag_berita = $this->input->post('tag_berita');
-		$start = $this->input->post('start');
-		$limit = $this->input->post('limit');
+		$start = (int) $this->input->post('start');
+		$limit = (int) $this->input->post('limit');
 
 		// Call the helper function to get the article data
 		$artikel = get_artikel();
@@ -368,7 +368,10 @@ class Artikel extends CI_Controller
 		if (is_array($artikel)) {
 			// Filter the articles based on the given tag
 			$filtered_artikel = array_filter($artikel, function ($item) use ($tag_berita) {
-				return isset($item['tag_berita']) && strpos($item['tag_berita'], $tag_berita) !== false;
+				$tag = isset($item['tag_berita']) ? (string) $item['tag_berita'] : '';
+				$search = is_array($tag_berita) ? implode(',', $tag_berita) : (string) $tag_berita;
+
+				return $tag !== '' && $search !== '' && strpos($tag, $search) !== false;
 			});
 
 			// Slice the filtered array based on start and limit
@@ -382,32 +385,36 @@ class Artikel extends CI_Controller
 					$judul_berita = $row['judul_berita'];
 					$tittle_news = preg_replace("![^a-z0-9]+!i", "-", $judul_berita);
 					$output .= '
-                <div class="col-lg-6 col-12 ">
-                    <div id="list" class="border-radius">
-                        <div class="row">
-                            <div class="col-lg-4 col-md-4 col-4">
-                                <div class="form-group">
-                                    <a class="text-dark add-view-news" href="' . base_url('Artikel/page/') . $tittle_news . '" data-id-berita="' . $row['id_berita'] . '">
-                                        <img src="https://admin.solaceproperti/upload/article/' . $row['foto_berita'] . '"
-                                            class="img-fluid p-1 border-radius img-berita" data-id-berita="' . $row['id_berita'] . '"
-                                            alt="red sample">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="col-lg-8 col-md-8 col-8">
-                                <a class="text-dark add-view-news" href="' . base_url('Artikel/page/') . $tittle_news . '" data-id-berita="' . $row['id_berita'] . '">
-                                    <h6 class="text-publishing">' . $row['tgl_berita'] . '</h6>
-                                    <h6 class="tittle-news">' . $row['judul_berita'] . '</h6>
-                                    <h6 class="font-text-port">' . $row['view_berita'] . ' Views</h6>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                ';
+
+							<div class="col-lg-6 col-12 ">
+								<div id="list" class="article-card position-relative">
+									<div class="row">
+										<div class="col-lg-4 col-md-4 col-4">
+											<div class="form-group">
+												<a class="add-view-news" href="' . base_url('Artikel/page/') . $tittle_news . '" data-id-berita="' . $row['id_berita'] . '">
+													<img src="https://admin.solaceproperti.com/upload/article/' . $row['foto_berita'] . '"
+														class="article-image img-left-rounded" data-id-berita="' . $row['id_berita'] . '"
+														alt="red sample">
+												</a>
+											</div>
+										</div>
+										<div class="col-lg-8 col-md-8 col-8 pl-0">
+											<a class="text-dark add-view-news" href="' . base_url('Artikel/page/') . $tittle_news . '" data-id-berita="' . $row['id_berita'] . '">
+												<h6 class="text-publishing">' . $row['tgl_berita'] . '</h6>
+												<h6 class="tittle-news">' . $row['judul_berita'] . '</h6>
+												<div class="viewer-artikel">
+													<i class="bi bi-eye"></i> ' . $row['view_berita'] . '
+												</div>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+				';
 				}
 			}
 			echo $output;
 		}
 	}
+
 }

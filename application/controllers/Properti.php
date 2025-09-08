@@ -194,7 +194,7 @@ class Properti extends CI_Controller
                 $kota_html .= '<li class="img-item">' .
                     // '<a href="' . base_url('Dijual/properti/') . preg_replace("![^a-z0-9]+!i", "-", $kota) . '">' .
                     '<div class="card border li-city-sm" data-city="' . preg_replace("![^a-z0-9]+!i", "-", $kota)  . '">' .
-                    '<img class="radius-img-city-sm" src="https://admin.kanpa.co.id/upload/icon/' . $gambar_city . '" alt="">' .
+                    '<img class="radius-img-city-sm" src="https://admin.solaceproperti.com/upload/icon/' . $gambar_city . '" alt="">' .
                     '<div class="p-3 text-center m-li-box-city">' .
                     ' <h6 class="text-black font-weight-bold d-table-caption f-s-li-city mb-0">' . $kota . '</h6>' .
                     ' </div>' .
@@ -380,7 +380,7 @@ class Properti extends CI_Controller
             '<div class="populer-container">' .
             '<a href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $data_properti['judul_properti']) . '/tipe/' . $data_properti['luas_tanah'] . '/' . $data_properti['luas_bangunan'] . '">' .
             '<div class="populer-content">' .
-            '<img src="https://admin.kanpa.co.id/upload/gambar_properti/' . $data_properti['gambar_properti'] . '" class="img-produk-sw">' .
+            '<img src="https://admin.solaceproperti.com/upload/gambar_properti/' . $data_properti['gambar_properti'] . '" class="img-produk-sw">' .
             $data_properti['status'] .
             '</div>' .
             '<div class="bg-light border p-2">' .

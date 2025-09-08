@@ -176,6 +176,20 @@ h6 {
     color: #fff;
 }
 
+.read-more-tag.btn-outline-info {
+    color: #00392b;
+    border-color: #00392b;
+    padding: 3px 10px;
+    font-size: 12px;
+    border-radius: 7px;
+}
+
+.read-more-tag.btn-outline-info:hover {
+    background-color: #00392b;
+    border-color: #f6d76f;
+    color: #fff;
+}
+
 .viewer-artikel {
     position: absolute;
     bottom: 4px;
@@ -273,7 +287,7 @@ h6 {
 
 .tittle {
     font-weight: bold;
-    color: #1a44b2;
+    color: #05382e;
 }
 
 .wrapper-search-cari {
@@ -2165,7 +2179,7 @@ span.select2-container {
 }
 
 .btn-back {
-    background: #1a44b2;
+    background: #05382e;
     color: white;
     border-radius: 16px;
     padding: 5px;
@@ -2186,20 +2200,20 @@ span.select2-container {
 
 .btn-penawaran.dijual.active {
     background: #ffc800;
-    color: #1a44b2;
+    color: #06463b;
 }
 
 .btn-penawaran.disewa.active {
-    background: #1a44b2;
-    color: #ffc800;
+    background:#ffc800;
+    color: #06463b;
 }
 
 .bg-Disewa {
-    background: #1a44b2 !important;
+    background: #06463b !important;
 }
 
 .bg-Dijual {
-    background: #ffc800 !important;
+    background: #06463b !important;
 }
 
 .fz-text-penwaran {
@@ -2293,8 +2307,8 @@ span.select2-container {
 
 .b-amount-white {
     background: white;
-    color: #1a44b2;
-    border: 5px #1a44b2 solid;
+    color:#05382e;
+    border: 5px #05382e solid;
     border-radius: 7px;
     padding: 15px;
     margin-top: 1rem;

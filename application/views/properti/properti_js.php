@@ -169,13 +169,13 @@ $(document).ready(function() {
 
             // Set the appropriate banner based on the clicked button
             if ($(this).data('penawaran') == 'dijual') {
-                $('#banner-penawaran').attr('src', url_banner + 'Properti_Dijual.jpg');
+                $('#banner-penawaran').attr('src', url_banner + 'Properti_Dijual.png');
             } else if ($(this).data('penawaran') == 'disewa') {
-                $('#banner-penawaran').attr('src', url_banner + 'Properti_Disewa.jpg');
+                $('#banner-penawaran').attr('src', url_banner + 'Properti_Disewa.png');
             } else if ($(this).data('penawaran') == 'takeover') {
-                $('#banner-penawaran').attr('src', url_banner + 'Properti_Disewa.jpg');
+                $('#banner-penawaran').attr('src', url_banner + 'Properti_Takeover.png');
             } else if ($(this).data('penawaran') == 'lelang') {
-                $('#banner-penawaran').attr('src', url_banner + 'Properti_Disewa.jpg');
+                $('#banner-penawaran').attr('src', url_banner + 'Properti_Lelang.png');
             }
             // Add 'active' class and set the data-btn attribute to 'active'
             $(this).addClass('active').attr('data-btn', 'active');

@@ -1,8 +1,9 @@
 <main id="kpr">
-    <section class="bg-gray-1 pb-5">
+    <section class="bg-gray-1 pb-5 mt-5">
         <div class="container mt-4">
             <?php foreach ($filtered_banners as $data) { ?>
-                <img src="https://admin.kanpa.co.id/upload/banner/<?= $data['foto_banner']; ?>" class="img-fluid border box-shadow" alt="">
+            <img src="https://admin.solaceproperti.com/upload/banner/<?= $data['foto_banner']; ?>"
+                class="img-fluid border box-shadow" alt="">
             <?php } ?>
             <div class="row mt-5">
                 <div class="col-lg-6 col-md-6 col-12">
@@ -71,7 +72,8 @@
     <section class="bg-white">
         <div class="container">
             <h4 class="text-center font-weight-bold">
-                Kanpa bekerjasama dengan seluruh berberapa Bank terkemuka di Indonesia untuk membantu pendanaan properti anda dalam bentuk KPR, KAP, Take Over, ataupun KMK.
+                Kanpa bekerjasama dengan seluruh berberapa Bank terkemuka di Indonesia untuk membantu pendanaan properti
+                anda dalam bentuk KPR, KAP, Take Over, ataupun KMK.
                 Prosesnya Mudah, Cepat, dan Gratis! tanpa tambahan Biaya.
             </h4>
             <div class="row">
@@ -208,7 +210,8 @@
                         </li>
                         <li class="align-items-baseline d-flex gap-2 mb-2">
                             <input type="checkbox" id="">
-                            <label for="">Bukti Bayar Appraisal (Rp. 1,1 juta untuk plafon < 1M, Rp. 1,5 juta untuk plafon> 1M )</label>
+                            <label for="">Bukti Bayar Appraisal (Rp. 1,1 juta untuk plafon < 1M, Rp. 1,5 juta untuk
+                                    plafon> 1M )</label>
                         </li>
                         <li class="align-items-baseline d-flex gap-2 mb-2">
                             <input type="checkbox" id="">

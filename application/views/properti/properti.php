@@ -15,7 +15,7 @@
 
 <main class="main-segment" id="">
     <section id="header" class="mt-5 p-3">
-        <div class="text-penawarann-properti flex mt-3 mb-3">
+        <div class="text-penawarann-properti flex mt-5 mb-3">
             <i class="fa-solid fa-arrow-left btn-back"></i>
             <i id="text-url-aktif" class="text-ubuntu text-gray fz-text-penwaran text-align-center">
                 Properti Dijual ~ Di Kota Semarang

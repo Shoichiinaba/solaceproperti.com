@@ -231,7 +231,8 @@ figure:hover .img-grid-news {
                 <!-- akhir data pagination -->
                 <div id="load_data_message"></div>
                 <div class="text-center mt-3">
-                    <button id="read-more" class="btn btn-xs btn-outline-info"> <i class="bi bi-box-arrow-in-down"></i>
+                    <button id="read-more" class="btn btn-xs btn-outline-info read-more-tag"> <i
+                            class="bi bi-box-arrow-in-down"></i>
                         Read More</button>
                 </div>
                 <!-- end berita -->
