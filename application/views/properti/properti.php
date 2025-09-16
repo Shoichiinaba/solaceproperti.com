@@ -77,7 +77,7 @@
                     <!-- <h5 class="tittle">Pilih Kota</h5> -->
                     <div class="col-12">
                         <div class="slider-wrapper slider-wrapper-city">
-                            <ul id="load-data-kota-bottom" class="image-list swiper-gap-city p-0"
+                            <ul id="load-data-kota-bottom" class="image-list swiper-gap-city p-0 mt-3"
                                 style="min-height: unset;">
                                 <li class="img-item">
                                     <div class="card border li-city-none">

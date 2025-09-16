@@ -70,13 +70,10 @@ class Artikel extends CI_Controller
 
 	public function get_berita()
 	{
-		// Initialize variables for limit and start
 		$start = $this->input->post('start');
 		$limit = $this->input->post('limit');
 
-		// Call the helper function to get the article data with limit and start
 		$artikel = get_artikel();
-		// Check if the article data was fetched successfully
 		$output = '';
 
 		if (is_array($artikel)) {
@@ -170,8 +167,8 @@ class Artikel extends CI_Controller
 					$html_ribbon = '<div class="ribbon ribbon-top-left"><span>' . $row['status'] . '</span></div>';
 				}
 				// Assuming $row contains the property details you want to display
-				$output .= '<div class="img-item col p-2 pb-3">' .
-					'<div class="populer-container">' .
+				$output .= '<div class="img-item col-12 col-md-6 col-lg-4 p-2 pb-3">' .
+					'<div class="populer-container h-100">' .
 					'<a href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $row['judul_properti']) . '/tipe/' . $row['luas_tanah'] . '/' . $row['luas_bangunan'] . '">' .
 					'<div class="populer-content">' .
 					'<img src="https://admin.solaceproperti.com/upload/gambar_properti/' . htmlspecialchars($firstGambar, ENT_QUOTES, 'UTF-8') . '" class="img-produk-sw">' .
@@ -241,42 +238,64 @@ class Artikel extends CI_Controller
 
 	public function page()
 	{
+		// Normalisasi judul dari URL
 		$judul_artikel = preg_replace("![^a-z0-9]+!i", " ", $this->uri->segment(3));
+		$judul_artikel = strtolower(trim(preg_replace('/\s+/', ' ', $judul_artikel)));
+
 		$get_artikel = get_artikel();
 
+		$meta_desk   = '';
+		$meta_foto   = 'default.png';
+		$tag_berita  = '';
+		$artikel_ditemukan = false;
+
 		if (is_array($get_artikel)) {
-			// Filter articles based on $judul_artikel
 			$filtered_properties = array_filter($get_artikel, function ($fillter_artikel) use ($judul_artikel) {
-				return strtolower($fillter_artikel['judul_berita']) == strtolower($judul_artikel);
+				// Normalisasi judul artikel dari DB
+				$judul_db = strtolower(trim(preg_replace('/\s+/', ' ', $fillter_artikel['judul_berita'])));
+				return $judul_db === $judul_artikel;
 			});
-			foreach ($filtered_properties as $meta) {
-				$meta_desk = $meta['meta_desk'];
-				$meta_foto = $meta['meta_foto'];
-				$tag_berita = $meta['tag_berita'];
+
+			if (!empty($filtered_properties)) {
+				foreach ($filtered_properties as $meta) {
+					$meta_desk  = $meta['meta_desk'] ?? '';
+					$meta_foto  = $meta['meta_foto'] ?? 'default.png';
+					$tag_berita = $meta['tag_berita'] ?? '';
+				}
+				$artikel_ditemukan = true;
 			}
 		}
+
+		if (!$artikel_ditemukan) {
+			$data['_title'] = "Artikel tidak ditemukan";
+			$data['_view']  = "errors/html/error_artikel";
+			$this->load->view('layout/index', $data);
+			return;
+		}
+
 		// meta primary
 		$data['_title'] = $judul_artikel;
 		$data['_description'] = 'solaceproperti.com ' . $judul_artikel . ' - ' . $meta_desk;
 		$data['_keyword'] = 'artikel ' . $tag_berita . ', ' . $judul_artikel;
+
 		// meta facebook
 		$data['_title_fb'] = $judul_artikel;
 		$data['_description_fb'] = 'solaceproperti.com ' . $judul_artikel . ' - ' . $meta_desk;
-		// meta tiwitter
+
+		// meta twitter
 		$data['_title_tw'] = $judul_artikel;
 		$data['_description_tw'] = 'solaceproperti.com ' . $judul_artikel . ' - ' . $meta_desk;
 
-		$data['_meta_foto'] =  'https://admin.solaceproperti.com/upload/article/' . $meta_foto;
+		$data['_meta_foto'] = 'https://admin.solaceproperti.com/upload/article/' . $meta_foto;
 		$data['_url'] = base_url('Artikel/page/') . preg_replace("![^a-z0-9]+!i", "-", $judul_artikel);
-
 
 		$data['_script'] = 'artikel/artikel_js';
 		$data['_view'] = 'artikel/page_artikel';
 		$data['detail_artikel'] = $this->get_detail_artikel($judul_artikel);
 		$data['properti'] = $this->data_properti();
 		$data['data_tag'] = $this->data_tag();
-		$this->load->view('layout/index', $data);
 
+		$this->load->view('layout/index', $data);
 	}
 
 	function get_detail_artikel($judul_artikel)

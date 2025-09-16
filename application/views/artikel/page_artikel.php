@@ -222,20 +222,22 @@ figure:hover .img-grid-news {
                     </div>
                 </div>
                 <hr>
-                <!--Berita artikel infinity scrool-->
-                <div id="load_data" class="row">
-                    <!-- data pagination -->
-                    <br />
-                    <br />
+                <div class="row mt-3">
+                    <!--Berita artikel infinity scrool-->
+                    <div id="load_data" class="row">
+                        <!-- data pagination -->
+                        <br />
+                        <br />
+                    </div>
+                    <!-- akhir data pagination -->
+                    <div id="load_data_message"></div>
+                    <div class="text-center mt-3">
+                        <button id="read-more" class="btn btn-xs btn-outline-info read-more-tag"> <i
+                                class="bi bi-box-arrow-in-down"></i>
+                            Read More</button>
+                    </div>
+                    <!-- end berita -->
                 </div>
-                <!-- akhir data pagination -->
-                <div id="load_data_message"></div>
-                <div class="text-center mt-3">
-                    <button id="read-more" class="btn btn-xs btn-outline-info read-more-tag"> <i
-                            class="bi bi-box-arrow-in-down"></i>
-                        Read More</button>
-                </div>
-                <!-- end berita -->
                 <hr>
                 <span id="tag">
                     <span style="font-weight: bold;font-family: 'Poppins';"> TAG :</span>

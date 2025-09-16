@@ -1511,14 +1511,15 @@ span.select2-container {
     }
 
     .populer-content {
-        height: 9rem;
+        height: 17rem;
     }
 
     .img-produk-sw {
-        width: 18rem;
-        position: relative;
-        right: 27%;
-        height: auto;
+        width: 116%;
+        aspect-ratio: 16/9;   /* format wide */
+        object-fit: cover;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
     }
 
     .title-tayang,
@@ -2236,7 +2237,7 @@ span.select2-container {
     }
 
     .ul-type-properti {
-        position: relative;
+        position: sticky;
         display: flex;
         padding: 9px;
         top: 18%;

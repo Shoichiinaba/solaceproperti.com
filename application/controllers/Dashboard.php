@@ -411,7 +411,6 @@ class Dashboard extends CI_Controller
 		$limit = $this->input->post('limit');
 
 		$artikel = get_artikel();
-
 		$output = '';
 
 		if (is_array($artikel)) {

@@ -23,11 +23,12 @@
     <div class="navbar-wrapper">
         <div class="container">
             <nav class="navbar">
-                <ul class="d-flex gap-4 mb-0">
+                <ul class="d-flex flex-column flex-md-row gap-4 mb-0">
                     <li><a class="nav-link scrollto" href="<?= base_url('Properti/dijual/'); ?>#dijual">Dijual</a></li>
                     <li><a class="nav-link scrollto" href="<?= base_url('Properti/disewa/'); ?>#disewa">Disewa</a></li>
                     <li><a class="nav-link scrollto"
-                            href="<?= base_url('Properti/proyek_baru/perumahan/'); ?>#proyek_baru">Proyek Baru</a></li>
+                            href="<?= base_url('Properti/proyek_baru/perumahan/'); ?>#proyek_baru">Proyek
+                            Baru</a></li>
                     <li><a class="nav-link scrollto" href="<?= base_url('Simulasi_KPR'); ?>#kpr">KPR</a></li>
                     <li><a class="nav-link scrollto" href="<?= base_url('Artikel'); ?>#artikel">Artikel</a></li>
                 </ul>
