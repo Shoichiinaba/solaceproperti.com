@@ -425,4 +425,63 @@ $(document).on('click', '.view-properti', function(e) {
         }
     });
 });
+
+document.querySelectorAll(".search-tabs .tab").forEach(tab => {
+    tab.addEventListener("click", function() {
+        // Hapus active dari semua tab
+        document.querySelectorAll(".search-tabs .tab").forEach(t => t.classList.remove("active"));
+        // Tambahkan active ke tab yang diklik
+        this.classList.add("active");
+
+        // Sembunyikan semua input-group
+        document.querySelectorAll(".search-input-group").forEach(box => box.style.display = "none");
+        // Tampilkan input sesuai tab
+        if (this.dataset.tab === "beli") {
+            document.getElementById("tab-beli").style.display = "block";
+        } else {
+            document.getElementById("tab-sewa").style.display = "block";
+        }
+    });
+});
+
+// kode untuk search
+
+const BASE_URL = "<?= base_url(); ?>";
+
+// kode untuk search
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.querySelector(".search-input-group input");
+    const searchButton = document.querySelector(".btn-valuation");
+
+    let activeTab = "beli"; // default Hunian Impian
+
+    // Tab switching
+    document.querySelectorAll(".search-tabs .tab").forEach(tab => {
+        tab.addEventListener("click", function() {
+            document.querySelectorAll(".search-tabs .tab").forEach(t => t.classList.remove(
+                "active"));
+            this.classList.add("active");
+            activeTab = this.dataset.tab;
+        });
+    });
+
+    // Search action
+    searchButton.addEventListener("click", function() {
+        let keyword = searchInput.value.trim().toLowerCase();
+
+        // Map keyword ke kategori
+        let kategori = "properti";
+        if (["rumah"].includes(keyword)) kategori = "rumah";
+        else if (["perumahan"].includes(keyword)) kategori = "perumahan";
+        else if (["ruko"].includes(keyword)) kategori = "ruko";
+        else if (["tanah", "kavling"].includes(keyword)) kategori = "kavling";
+
+        // Bangun URL berdasarkan tab aktif
+        if (activeTab === "beli") {
+            window.location.href = BASE_URL + "Dashboard/dijual_search/" + kategori;
+        } else if (activeTab === "sewa") {
+            window.location.href = BASE_URL + "Dashboard/disewa_search/" + kategori;
+        }
+    });
+});
 </script>

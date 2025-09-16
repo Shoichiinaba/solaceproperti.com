@@ -478,5 +478,126 @@ class Dashboard extends CI_Controller
 		echo json_encode($result);
 	}
 
+	// code search properti
+
+    function property_search($type)
+    {
+
+        $data['_title']   = $titles[$type] ?? 'Dijual Properti';
+        $data['_url']     = base_url('Perumahan');
+        $data['_view']    = 'dashboard/properti_search';
+        $data['_script']  = 'dashboard/index_js';
+
+        $this->load->view('layout/index', $data);
+    }
+
+	public function data_properti_search()
+	{
+		// Fetch the start and limit from the POST request
+		$start = (int) ($this->input->post('start') ?? 0);
+		$limit = (int) ($this->input->post('limit') ?? 1);
+
+		// Fetch properties using the helper function
+		$properti_populer = get_properti_populer();
+
+		// Initialize the HTML string
+		$populer_html = '';
+
+		// Month names in Indonesian
+		$bulanIndonesia = [
+			1 => 'Januari',
+			2 => 'Februari',
+			3 => 'Maret',
+			4 => 'April',
+			5 => 'Mei',
+			6 => 'Juni',
+			7 => 'Juli',
+			8 => 'Agustus',
+			9 => 'September',
+			10 => 'Oktober',
+			11 => 'November',
+			12 => 'Desember'
+		];
+
+		if (is_array($properti_populer)) {
+
+			// Urutkan berdasarkan id_property terbaru di atas (DESC)
+			usort($properti_populer, function ($a, $b) {
+				return (int)$b['id_properti'] <=> (int)$a['id_properti'];
+			});
+
+			// Ambil data sesuai pagination
+			$populer_subset = array_slice($properti_populer, $start, $limit);
+
+			if (empty($populer_subset)) {
+				echo "No more data available";
+			} else {
+				foreach ($populer_subset as $populer) {
+					// Format tanggal dari Y-m-d ke 02 Agustus 2025
+					$dateString = $populer['dibuat'];
+					$date = DateTime::createFromFormat('Y-m-d', $dateString);
+					if ($date) {
+						$day = $date->format('d');
+						$month = $bulanIndonesia[(int)$date->format('m')];
+						$year = $date->format('Y');
+						$formattedDate = "$day $month $year";
+					} else {
+						$formattedDate = $dateString; // fallback jika parsing gagal
+					}
+
+					// Ambil gambar pertama
+					$gambarArray = explode(',', $populer['gambar']);
+					$firstGambar = $gambarArray[0] ?? 'default.jpg';
+
+					// Tampilkan ribbon jika status tertentu
+					$html_ribbon = '';
+					$status = strtolower($populer['status']);
+					if (in_array($status, ['subsidi', 'takeover', 'lelang'])) {
+						$html_ribbon = '<div class="ribbon ribbon-top-left ' . $status . '"><span>' . ucfirst($status) . '</span></div>';
+					}
+
+					// Generate HTML
+					$populer_html .= '<li class="img-item col-6 p-2 pb-3">' .
+						'<div class="populer-container">' .
+						'<a class="view-properti" data-id-properti="' . $populer['id_properti'] . '" href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $populer['judul_properti']) . '/tipe/' . $populer['luas_tanah'] . '/' . $populer['luas_bangunan'] . '">' .
+						'<div class="populer-content">' .
+						'<img src="https://admin.solaceproperti.com/upload/gambar_properti/' . htmlspecialchars($firstGambar, ENT_QUOTES, 'UTF-8') . '" class="img-produk-sw">' .
+						$html_ribbon .
+						'</div>' .
+						'<div class="bg-light border p-2">' .
+						'<span class="title-new-proyek">' . htmlspecialchars($populer['nama_type'], ENT_QUOTES, 'UTF-8') . '</span>' .
+						'<span class="title-tayang">Tayang sejak ' . htmlspecialchars($formattedDate, ENT_QUOTES, 'UTF-8') . '</span>' .
+						'.<h3 class="title-price">Rp ' . $populer['harga']. ' ' . htmlspecialchars($populer['satuan'], ENT_QUOTES, 'UTF-8') . '-an</h3>.' .
+						'<h5 class="title-properti text-black font-weight-bold">' . htmlspecialchars($populer['judul_properti'], ENT_QUOTES, 'UTF-8') . '</h5>' .
+						'<h6 class="font-weight-bold title-address"><i class="bi bi-geo-alt"></i> ' . htmlspecialchars($populer['alamat'], ENT_QUOTES, 'UTF-8') . '</h6>' .
+						'<ul class="d-flex ul-detail mt-3">' .
+						'<li class="text-black"><span class="font-weight-bold">LB</span>: ' . htmlspecialchars($populer['luas_bangunan'], ENT_QUOTES, 'UTF-8') . ' m2</li>' .
+						'<li class="text-black"><span class="font-weight-bold">LT</span>: ' . htmlspecialchars($populer['luas_tanah'], ENT_QUOTES, 'UTF-8') . ' m2</li>' .
+						'<li class="text-black"><span class="font-weight-bold">KT</span>: ' . htmlspecialchars($populer['jml_kamar'], ENT_QUOTES, 'UTF-8') . '</li>' .
+						'<li class="text-black"><span class="font-weight-bold">Km</span>: ' . htmlspecialchars($populer['jml_kamar_mandi'], ENT_QUOTES, 'UTF-8') . '</li>' .
+						'</ul>' .
+						'</a>' .
+						'<hr>' .
+						'<div class="d-flex kontakas">' .
+						'<img src="https://admin.solaceproperti.com/upload/agent/' . htmlspecialchars($populer['foto_profil'], ENT_QUOTES, 'UTF-8') . '" class="img-marketing">' .
+						'<div class="d-block">' .
+						'<h5 class="font-weight-bold title-name m-0">' . htmlspecialchars($populer['nama_agent'], ENT_QUOTES, 'UTF-8') . '</h5>' .
+						'<p class="small title-address m-0">' . htmlspecialchars($populer['position'], ENT_QUOTES, 'UTF-8') . '</p>' .
+						'</div>' .
+						'<a href="https://wa.me/' . $populer['no_tlp'] . '?text=hallo kak ' . $populer['nama_agent'] . ', Saya ingin tahu lebih lanjut tentang ' . $populer['nama_type'] . ' ' . $populer['judul_properti'] . ' ..." target="_blank">' .
+						'<i class="bi bi-whatsapp i-wa-marketing"></i>' .
+						'</a>' .
+						'</div>' .
+						'</div>' .
+						'</div>' .
+						'</li>';
+				}
+				echo $populer_html;
+			}
+		} else {
+			echo "Failed to fetch property data.";
+		}
+	}
+
 
 }

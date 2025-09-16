@@ -411,4 +411,5 @@ class Properti extends CI_Controller
             '</div>' .
             '</li>';
     }
+
 }

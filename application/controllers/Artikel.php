@@ -83,7 +83,7 @@ class Artikel extends CI_Controller
 			$artikel_subset = array_slice($artikel, $start, $limit);
 
 			if (empty($artikel_subset)) {
-				echo "No more data available";
+				echo "Tidak ada Data Artikel Lagi!!";
 			} else {
 				foreach ($artikel_subset as $row) {
 					$judul_berita = $row['judul_berita'];
@@ -241,89 +241,136 @@ class Artikel extends CI_Controller
 
 	public function page()
 	{
-		// Ambil judul artikel dari URL segment ke-3, ubah ke slug
-		$judul_artikel = $this->slugify($this->uri->segment(3));
-
+		$judul_artikel = preg_replace("![^a-z0-9]+!i", " ", $this->uri->segment(3));
 		$get_artikel = get_artikel();
-		$meta_desk = '';
-		$meta_foto = '';
-		$tag_berita = '';
 
 		if (is_array($get_artikel)) {
-			// Filter artikel berdasarkan slug judul
-			$filtered_properties = array_filter($get_artikel, function ($artikel) use ($judul_artikel) {
-				return $this->slugify($artikel['judul_berita']) === $judul_artikel;
+			// Filter articles based on $judul_artikel
+			$filtered_properties = array_filter($get_artikel, function ($fillter_artikel) use ($judul_artikel) {
+				return strtolower($fillter_artikel['judul_berita']) == strtolower($judul_artikel);
 			});
-
 			foreach ($filtered_properties as $meta) {
-				$meta_desk = $meta['meta_desk'] ?? '';
-				$meta_foto = $meta['meta_foto'] ?? '';
-				$tag_berita = $meta['tag_berita'] ?? '';
+				$meta_desk = $meta['meta_desk'];
+				$meta_foto = $meta['meta_foto'];
+				$tag_berita = $meta['tag_berita'];
 			}
 		}
-
 		// meta primary
-		$data['_title']       = $this->uri->segment(3); // tampilkan judul asli dari URL
-		$data['_description'] = 'Kanpa.co.id ' . $this->uri->segment(3) . ' - ' . $meta_desk;
-		$data['_keyword']     = 'artikel ' . $tag_berita . ', ' . $this->uri->segment(3);
-
+		$data['_title'] = $judul_artikel;
+		$data['_description'] = 'solaceproperti.com ' . $judul_artikel . ' - ' . $meta_desk;
+		$data['_keyword'] = 'artikel ' . $tag_berita . ', ' . $judul_artikel;
 		// meta facebook
-		$data['_title_fb']       = $this->uri->segment(3);
-		$data['_description_fb'] = 'Kanpa.co.id ' . $this->uri->segment(3) . ' - ' . $meta_desk;
+		$data['_title_fb'] = $judul_artikel;
+		$data['_description_fb'] = 'solaceproperti.com ' . $judul_artikel . ' - ' . $meta_desk;
+		// meta tiwitter
+		$data['_title_tw'] = $judul_artikel;
+		$data['_description_tw'] = 'solaceproperti.com ' . $judul_artikel . ' - ' . $meta_desk;
 
-		// meta twitter
-		$data['_title_tw']       = $this->uri->segment(3);
-		$data['_description_tw'] = 'Kanpa.co.id ' . $this->uri->segment(3) . ' - ' . $meta_desk;
+		$data['_meta_foto'] =  'https://admin.solaceproperti.com/upload/article/' . $meta_foto;
+		$data['_url'] = base_url('Artikel/page/') . preg_replace("![^a-z0-9]+!i", "-", $judul_artikel);
 
-		$data['_meta_foto'] = 'https://admin.solaceproperti.com/upload/article/' . $meta_foto;
-		$data['_url']       = base_url('Artikel/page/') . $judul_artikel;
 
-		$data['_script']         = 'artikel/artikel_js';
-		$data['_view']           = 'artikel/page_artikel';
-		$data['detail_artikel']  = $this->get_detail_artikel($judul_artikel);
-		$data['properti']        = $this->data_properti();
-		$data['data_tag']        = $this->data_tag();
-
+		$data['_script'] = 'artikel/artikel_js';
+		$data['_view'] = 'artikel/page_artikel';
+		$data['detail_artikel'] = $this->get_detail_artikel($judul_artikel);
+		$data['properti'] = $this->data_properti();
+		$data['data_tag'] = $this->data_tag();
 		$this->load->view('layout/index', $data);
+
 	}
 
-	/**
-	 * Helper untuk ubah string jadi slug
-	 */
-	private function slugify($string)
-	{
-		$string = strtolower($string);
-		$string = preg_replace('![^a-z0-9]+!i', '-', $string);
-		return trim($string, '-');
-	}
-
-	/**
-	 * Ambil detail artikel berdasarkan slug judul
-	 */
-	private function get_detail_artikel($judul_slug)
+	function get_detail_artikel($judul_artikel)
 	{
 		$get_artikel = get_artikel();
 		$output = '';
+		$id_berita = null; // default null
 
 		if (is_array($get_artikel)) {
-			$filtered = array_filter($get_artikel, function ($artikel) use ($judul_slug) {
-				return $this->slugify($artikel['judul_berita']) === $judul_slug;
+			// Filter articles based on $judul_artikel
+			$filtered_properties = array_filter($get_artikel, function ($fillter_artikel) use ($judul_artikel) {
+				return strtolower(trim($fillter_artikel['judul_berita'])) == strtolower(trim($judul_artikel));
 			});
 
-			if (empty($filtered)) {
-				return '<p style="color:red;">Artikel tidak ditemukan: ' . htmlspecialchars($judul_slug) . '</p>';
+			foreach ($filtered_properties as $artikel) {
+				$id_berita = $artikel['id_berita'];
+				$output .= '<img src="https://admin.solaceproperti.com/upload/article/' . $artikel['foto_berita'] . '" class="img-fluid border-radius img-berita" data-id-berita="' . $artikel['id_berita'] . '" alt="red sample">' .
+					'<span class="float-right">' . $artikel['tgl_berita'] . '</span>' .
+					'<hr>' .
+					'<h3 style="font-family: auto;">' . $artikel['judul_berita'] . '</h3>';
+			}
+		}
+
+		// Jika tidak ada id_berita ditemukan, langsung return kosong
+		if (!$id_berita) {
+			return '';
+		}
+
+		$get_data_artikel = get_data_artikel();
+
+		if (is_array($get_data_artikel)) {
+			// Urutkan id_data_berita dari kecil ke besar
+			usort($get_data_artikel, function ($a, $b) {
+				return $a['id_data_berita'] <=> $b['id_data_berita'];
+			});
+
+			// Filter sesuai berita_id
+			$filtered_properties = array_filter($get_data_artikel, function ($fillter_artikel) use ($id_berita) {
+				return $fillter_artikel['berita_id'] == $id_berita;
+			});
+
+			// Group berdasarkan id_data_berita
+			$grouped = [];
+			foreach ($filtered_properties as $artikel) {
+				$grouped[$artikel['id_data_berita']][] = $artikel;
 			}
 
-			foreach ($filtered as $artikel) {
-				$output .= '
-					<img src="https://admin.solaceproperti.com/upload/article/' . ($artikel['foto_berita'] ?? '') . '"
-						class="img-fluid border-radius img-berita"
-						data-id-berita="' . ($artikel['id_berita'] ?? '') . '"
-						alt="' . htmlspecialchars($artikel['judul_berita'] ?? '') . '">
-					<span class="float-right">' . ($artikel['tgl_berita'] ?? '') . '</span>
-					<hr>
-					<h3 style="font-family: auto;">' . ($artikel['judul_berita'] ?? '') . '</h3>
-				';
+			// Tampilkan per grup
+			foreach ($grouped as $id_data => $items) {
+				$output .= '<div class="gallery-block mb-4">';
+
+				// Hitung jumlah gambar
+				$jumlah_gambar = count($items);
+				$colClass = 'col-12'; // default kalau 1 gambar
+
+				if ($jumlah_gambar == 2) {
+					$colClass = 'col-md-6 col-12';
+				} elseif ($jumlah_gambar == 3) {
+					$colClass = 'col-md-4 col-12';
+				} elseif ($jumlah_gambar >= 4) {
+					$colClass = 'col-md-3 col-12';
+				}
+
+				// tampilkan gambar dalam row bootstrap
+				$output .= '<div class="row g-3 justify-content-center">';
+				foreach ($items as $item) {
+					if (!empty($item['file_foto_berita'])) {
+						$output .= '
+							<div class="' . $colClass . '">
+								<img src="https://admin.solaceproperti.com/upload/article/' . $item['file_foto_berita'] . '"
+									alt="foto berita"
+									class="img-fluid rounded"
+									style="width:100%; height:auto; object-fit:contain;">
+							</div>';
+					}
+				}
+				$output .= '</div>'; // end row
+
+				// tampilkan text_berita
+				if (!empty($items[0]['text_berita'])) {
+					$output .= '<div class="gallery-text mt-3">' . $items[0]['text_berita'] . '</div>';
+				}
+
+				// tampilkan tombol jika ada
+				if (!empty($items[0]['file_foto_btn']) && !empty($items[0]['link_btn'])) {
+					$output .= '<center class="mt-3">' .
+						'<a href="' . htmlspecialchars($items[0]['link_btn']) . '" target="_blank">' .
+						'<img src="https://admin.solaceproperti.com/upload/article/' . $items[0]['file_foto_btn'] . '" ' .
+						'class="img-fluid" alt="" style="width: 25rem;">' .
+						'</a>' .
+						'</center>';
+				}
+
+				$output .= '</div>'; // end gallery-block
 			}
 		}
 

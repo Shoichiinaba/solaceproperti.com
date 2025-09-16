@@ -55,7 +55,6 @@ if (!function_exists('get_artikel')) {
 }
 
 // mengambil data artikel
-if (!function_exists('get_data_artikel')) {
     function get_data_artikel()
     {
         $CI = &get_instance();
@@ -72,7 +71,6 @@ if (!function_exists('get_data_artikel')) {
         $response = curl_exec($ch);
 
         if (curl_errno($ch)) {
-            // echo "cURL Error: " . curl_error($ch); // optional debug
             curl_close($ch);
             return [];
         }
@@ -82,17 +80,15 @@ if (!function_exists('get_data_artikel')) {
         if (json_last_error() !== JSON_ERROR_NONE) return [];
 
         $list = [];
-        if (isset($decoded['data']) && is_array($decoded['data'])) {
+        if (isset($decoded['body']['data']) && is_array($decoded['body']['data'])) {
+            $list = $decoded['body']['data'];
+        } elseif (isset($decoded['data']) && is_array($decoded['data'])) {
             $list = $decoded['data'];
-        } elseif (isset($decoded[1]) && is_array($decoded[1])) {
-            $list = $decoded[1];
-        } elseif (is_array($decoded) && isset($decoded[0]) && is_array($decoded[0])) {
-            $list = $decoded;
         }
 
-        // Filter hanya item valid
+        // ✅ Gunakan field yang benar sesuai API: berita_id
         $list = array_values(array_filter($list, function ($row) {
-            return is_array($row) && isset($row['id_berita']);
+            return is_array($row) && isset($row['berita_id']);
         }));
 
         return $list;
@@ -134,6 +130,4 @@ if (!function_exists('get_data_artikel')) {
 
         return json_decode($response, true);
     }
-}
-
 }

@@ -5,7 +5,7 @@ var segment_properti = "<?= $this->uri->segment(3); ?>";
 
 $(document).ready(function() {
     let start = 0; // Starting index
-    let limit = window.innerWidth <= 768 ? 4 : 5; // Set initial limit based on screen size mobile 4 dekstop 5
+    let limit = window.innerWidth <= 768 ? 4 : 5;
     let lastLoadedStart = 0;
     let data_properti = 'all';
 
@@ -161,7 +161,7 @@ $(document).ready(function() {
             $(this).removeClass('active');
             $(this).attr('data-btn', ''); // Clear the data-btn attribute
             $('#banner-penawaran').attr('src', url_banner +
-                'All_Properti.jpg'); // Reset banner to default
+                'All_Properti.png'); // Reset banner to default
             target_penawaran = 'jualsewa';
         } else {
             // Remove 'active' class and data-btn from all buttons
@@ -235,10 +235,7 @@ const initSlider = () => {
             });
         });
         const handleSlideButtons = () => {
-            // console.log('scoll swiper');
-            // Calculate the maximum scrollable width
             const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
-            // Show or hide buttons depending on the current scroll position
             prevButton.style.display = imageList.scrollLeft <= 0 ? "none" : "block";
             nextButton.style.display = imageList.scrollLeft >= maxScrollLeft ? "none" : "block";
         };
@@ -333,18 +330,10 @@ function activateMenuItem(segment) {
             icon.classList.remove('active');
         }
 
-        // if (targetId == 'perumahan') {
-        //     $('.main-segment').attr('id', 'perumahan');
-        // } else {
-        //     $('.main-segment').attr('id', 'dijual');
-        // }
         if (targetId == 'header') {
-            // console.log(targetId);
             $('#ul-menu-left').removeClass('active');
-            // $('.text-penawarann-properti').removeClass('active');
         } else {
             $('#ul-menu-left').addClass('active');
-            // $('.text-penawarann-properti').addClass('active');
         }
     });
 }
@@ -474,170 +463,84 @@ function add_city_url(city) {
 function change_meta() {
     var currentUrl = window.location.href;
     var urlSegments = currentUrl.split('/');
-    var segmentPenawaran = urlSegments[5];
-    var segmentProperti = urlSegments[6];
-    var segmentCity = urlSegments[7];
+    var segmentPenawaran = urlSegments[5] || '';
+    var segmentProperti = urlSegments[6] || '';
+    var segmentCity = urlSegments[7] || '';
     console.log(segmentPenawaran + ' ' + segmentProperti + ' ' + segmentCity);
 
     if (segmentCity == '#disewa' || segmentCity == '#dijual') {
         segmentCity = '';
     }
 
+    let Penawaranremovedi = ''; // ✅ deklarasi awal agar tidak error
+
     if (segmentPenawaran == 'jualsewa') {
         segmentPenawaran = 'Dijual & Disewa';
     } else {
-        segmentPenawaran = segmentPenawaran.charAt(0).toUpperCase() + segmentPenawaran.slice(1)
-        if (segmentPenawaran.startsWith('di')) {
-            Penawaranremovedi = segmentPenawaran.slice(2); // Remove the first two characters 'di'
+        segmentPenawaran = segmentPenawaran.charAt(0).toUpperCase() + segmentPenawaran.slice(1);
+        if (segmentPenawaran.startsWith('Di')) {
+            Penawaranremovedi = segmentPenawaran.slice(2); // Remove "Di"
+        } else {
+            Penawaranremovedi = segmentPenawaran; // fallback kalau bukan diawali "di"
         }
     }
 
     var formattedCity = segmentCity ? segmentCity.replace(/[^a-z0-9]+/gi, ' ') : '';
-    if (formattedCity !== '') { // Correct condition to check if formattedCity is not empty
+    if (formattedCity !== '') {
         formattedCity = 'Di ' + formattedCity;
     } else {
         formattedCity = 'Di Indonesia';
     }
-    $('#text-url-aktif').text("Properti " + segmentPenawaran + ' ' + segmentProperti + ' ' + formattedCity);
 
+    $('#text-url-aktif').text("Properti " + segmentPenawaran + ' ' + segmentProperti + ' ' + formattedCity);
 
     if (segmentProperti == 'rumah') {
         console.log('Rumah')
-        // Rumah
-        //  primary
-        document.title = segmentPenawaran + 'Rumah Terbaik ' + formattedCity + ' 2024 - Temukan Rumah Impian Anda ' +
+        document.title = segmentPenawaran + ' Rumah Terbaik ' + formattedCity + ' 2024 - Temukan Rumah Impian Anda ' +
             formattedCity;
-        $('meta[name="description"]').attr('content', 'Temukan rumah ' + segmentPenawaran + ' terbaik Anda' +
+        $('meta[name="description"]').attr('content', 'Temukan rumah ' + segmentPenawaran + ' terbaik Anda ' +
             formattedCity +
-            '  Dapatkan rumah impian Anda dengan harga terjangkau dan pilihan yang sesuai kebutuhan.');
-        $('meta[name="keywords"]').attr('content', Penawaranremovedi + 'rumah,' + segmentPenawaran + ' rumah ' +
-            formattedCity + ', rumah ' + segmentPenawaran + formattedCity + ', rumah murah' + formattedCity +
-            ', rumah impian 2024' + formattedCity + ', properti rumah' + formattedCity);
+            '. Dapatkan rumah impian Anda dengan harga terjangkau dan pilihan sesuai kebutuhan.');
+        $('meta[name="keywords"]').attr('content', Penawaranremovedi + ' rumah, ' + segmentPenawaran + ' rumah ' +
+            formattedCity + ', rumah ' + segmentPenawaran + ' ' + formattedCity + ', rumah murah ' + formattedCity +
+            ', rumah impian 2024 ' + formattedCity + ', properti rumah ' + formattedCity);
+
         // facebook
         $('meta[property="og:title"]').attr('content', segmentPenawaran + ' Rumah Terbaik 2024 ' + formattedCity +
-            ' - Temukan Rumah Impian Anda' + formattedCity);
+            ' - Temukan Rumah Impian Anda ' + formattedCity);
         $('meta[property="og:description"]').attr('content',
             'Cari rumah idaman Anda dengan mudah di marketplace terpercaya. ' + Penawaranremovedi +
             ' rumah dengan harga terbaik ' + formattedCity + '.');
-        // twitter
-        $('meta[name="twitter:]').attr('content', segmentPenawaran + ' Rumah Terbaik 2024 - Temukan Rumah Impian Anda');
-        $('meta[name="twitter:]').attr('content', 'Temukan rumah yang sesuai dengan kebutuhan Anda ' + formattedCity +
+
+        // twitter ✅ perbaikan selector
+        $('meta[name="twitter:title"]').attr('content', segmentPenawaran +
+            ' Rumah Terbaik 2024 - Temukan Rumah Impian Anda');
+        $('meta[name="twitter:description"]').attr('content', 'Temukan rumah yang sesuai dengan kebutuhan Anda ' +
+            formattedCity +
             '. Penawaran terbaik ' + formattedCity + '.');
 
     } else if (segmentProperti == 'perumahan') {
         console.log('Perumahan')
-        // Perumahan
-        //  primary
         document.title = 'Perumahan Terbaik 2024 - ' + segmentPenawaran + ' Perumahan ' + formattedCity;
         $('meta[name="description"]').attr('content', 'Temukan perumahan impian Anda ' + formattedCity +
-            '. Dijual perumahan dengan fasilitas lengkap dan harga bersaing. ' + segmentCity);
+            '. Dijual perumahan dengan fasilitas lengkap dan harga bersaing.');
         $('meta[name="keywords"]').attr('content', 'perumahan ' + segmentCity + ', dijual perumahan ' + segmentCity +
-            ', perumahan baru ' + segmentCity + ', perumahan 2024 ' + segmentCity + ', properti perumahan' +
+            ', perumahan baru ' + segmentCity + ', perumahan 2024 ' + segmentCity + ', properti perumahan ' +
             segmentCity);
-        // facebook
+
         $('meta[property="og:title"]').attr('content', 'Perumahan Terbaik 2024 - ' + segmentPenawaran + ' Perumahan ' +
             segmentCity);
         $('meta[property="og:description"]').attr('content', 'Cari perumahan terbaik di lokasi strategis ' +
-            segmentCity + '. Dijual perumahan dengan harga bersaing dan fasilitas unggulan ' + segmentCity);
-        // twitter
-        $('meta[name="twitter:]').attr('content', 'Perumahan Terbaik 2024 - ' + segmentPenawaran + ' Perumahan ' +
-            segmentCity);
-        $('meta[name="twitter:]').attr('content', 'Jual perumahan ' + segmentCity +
-            ' dengan fasilitas terbaik. Temukan perumahan impian Anda sekarang.' + segmentCity);
+            segmentCity +
+            '. Dijual perumahan dengan harga bersaing dan fasilitas unggulan ' + segmentCity);
 
-    } else if (segmentProperti == 'ruko') {
-        console.log('Ruko')
-        // Ruko
-        //  primary
-        document.title = segmentPenawaran + ' Ruko Strategis 2024 - Investasi Properti Terbaia';
-        $('meta[name="description"]').attr('content', 'Temukan ruko di lokasi strategis untuk keperluan bisnis ' +
-            segmentCity + '. ' + segmentPenawaran + ' ruko dengan harga terbaik ' + segmentCity + '.');
-        $('meta[name="keywords"]').attr('content', segmentPenawaran + ' ruko, ' + Penawaranremovedi +
-            ' ruko, ruko strategis ' + segmentCity + ', investasi ruko, ruko 2024, ruko untuk bisnis' + segmentCity);
-        // facebook
-        $('meta[property="og:title"]').attr('content', segmentPenawaran +
-            ' Ruko Strategis 2024 - Investasi Properti Terbaik' + segmentCity);
-        $('meta[property="og:description"]').attr('content', 'Ruko ' + segmentPenawaran +
-            ' dengan lokasi strategis untuk bisnis Anda. Dapatkan penawaran terbaik ' + segmentCity + '.');
-        // twitter
-        $('meta[name="twitter:]').attr('content', segmentPenawaran +
-            ' Ruko Strategis 2024 - Investasi Properti Terbaik' + segmentCity);
-        $('meta[name="twitter:]').attr('content', 'Temukan ruko di lokasi terbaik untuk usaha Anda ' + segmentCity +
-            '. ' + segmentPenawaran + ' ruko ' + segmentCity + ' dengan penawaran menarik.');
-
-    } else if (segmentProperti == 'kavling') {
-        console.log('Kavling')
-        // Kavling
-        //  primary
-        document.title = 'Kavling Terbaik 2024 - Jual Kavling di Lokasi Strategis ' + segmentCity;
-        $('meta[name="description"]').attr('content', 'Cari kavling strategis untuk investasi atau pembangunan ' +
-            segmentCity + '. Jual kavling dengan pilihan lokasi terbaik ' + segmentCity + '.');
-        $('meta[name="keywords"]').attr('content', 'jual kavling ' + segmentCity + ', Dijual kavling ' + segmentCity +
-            ', kavling strategis ' + segmentCity + ', properti kavling ' + segmentCity + ', kavling 2024 ' +
-            segmentCity + ', investasi tanah ' + segmentCity);
-        // facebook
-        $('meta[property="og:title"]').attr('content', 'Kavling Terbaik 2024 - Dijual Kavling di Lokasi Strategis ' +
+        $('meta[name="twitter:title"]').attr('content', 'Perumahan Terbaik 2024 - ' + segmentPenawaran + ' Perumahan ' +
             segmentCity);
-        $('meta[property="og:description"]').attr('content', 'Temukan kavling di lokasi strategis ' + segmentCity +
-            ' untuk investasi atau pembangunan properti. Jual kavling dengan harga menarik.');
-        // twitter
-        $('meta[name="twitter:]').attr('content', 'Kavling Terbaik 2024 - Dijual Kavling di Lokasi Strategis ' +
-            segmentCity);
-        $('meta[name="twitter:]').attr('content', 'Jual kavling di lokasi strategis ' + segmentCity +
-            ' untuk investasi properti. Temukan pilihan kavling terbaik ' + segmentCity + '.');
+        $('meta[name="twitter:description"]').attr('content', 'Jual perumahan ' + segmentCity +
+            ' dengan fasilitas terbaik. Temukan perumahan impian Anda sekarang.');
     }
-    var currentUrl = window.location.href;
+
+    // ✅ update URL og
     $('meta[property="og:url"]').attr('content', currentUrl);
-    // console.log(currentUrl);
-
 }
-
-// $('meta[name="robots"]').attr('content', 'index, follow');
-// $('meta[property="og:type"]').attr('cont', 'ent="website');
-// $('meta[name="twitter:]').attr('ard', 'content="summary_large_image');
-
-
-// if (targetElement.length) {
-//     // Determine if the device is mobile or desktop based on window width
-//     const isMobile = $(window).width() <= 768;
-//     const customOffset = isMobile ? 160 : 100;
-
-//     // Calculate the exact scroll position
-//     const elementPosition = targetElement.offset().top;
-//     const offsetPosition = elementPosition - customOffset;
-
-//     // Scroll to the calculated position with smooth behavior
-//     $('html, body').animate({
-//         scrollTop: offsetPosition
-//     }, 100); // 600ms duration for smooth scroll
-// }
-
-// function get_segments() {
-//     var currentUrl = window.location.href;
-
-//     // Remove any trailing slash at the end if it exists
-//     if (currentUrl.endsWith('/')) {
-//         currentUrl = currentUrl.slice(0, -1);
-//     }
-
-//     // Split the URL into segments
-//     var urlSegments = currentUrl.split('/');
-
-//     // Return each segment dynamically
-//     return {
-//         segment1: urlSegments[2], // 'localhost'
-//         segment2: urlSegments[3], // 'ecom_kanpa'
-//         segment3: urlSegments[4], // 'Properti'
-//         segment4: urlSegments[5], // 'dijual'
-//         segment5: urlSegments[6], // 'rumah' (or whatever the last segment is)
-//     };
-// }
-
-// // Example usage:
-// var segments = get_segments();
-// console.log('Segment 1:', segments.segment1);
-// console.log('Segment 2:', segments.segment2);
-// console.log('Segment 3:', segments.segment3);
-// console.log('Segment 4:', segments.segment4);
-// console.log('Segment 5:', segments.segment5);
 </script>

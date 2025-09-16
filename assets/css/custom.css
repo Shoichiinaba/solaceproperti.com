@@ -1990,23 +1990,29 @@ footer .footer-cat,
 }
 
 /* Tabs */
+
 .search-tabs {
     display: flex;
     justify-content: flex-start;
     gap: 20px;
-    padding: 16px 24px 0;
-    font-weight: bold;
+    padding: 6px 24px 0;
     font-size: 18px;
+    font-weight: bold;
 }
 
 .search-tabs span {
     cursor: pointer;
     color: #555;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+.search-tabs span:hover {
+    color: #000;
 }
 
 .search-tabs .active {
-    color: #000;
-    border-bottom: 2px solid #000;
+    color: #06473c; /* warna aktif sesuai permintaan */
+    border-bottom: 2px solid #06473c;
 }
 
 /* Input */
@@ -2050,6 +2056,8 @@ footer .footer-cat,
     font-weight: bold;
     margin-top: 10px;
 }
+
+/* akhir css search */
 
 .size-chat-marketing {
     height: 65px;

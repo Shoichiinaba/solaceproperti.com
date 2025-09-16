@@ -1,7 +1,3 @@
-<style>
-
-</style>
-
 <main id="main">
     <section id="home" class="mt-4">
         <div class="swiper-container-banner">
@@ -16,18 +12,25 @@
             <div class="search-overlay p-0">
                 <div class="search-box">
                     <div class="search-tabs">
-                        <span class="active">Buy</span>
-                        <span>Rent</span>
+                        <span class="tab active" data-tab="beli">Hunian Impian</span>
+                        <span class="tab" data-tab="sewa">Sewa Properti</span>
                     </div>
-                    <div class="search-input-group">
-                        <input type="text" placeholder="Where do you want to buy? e.g Semarang">
+
+                    <div class="search-input-group" id="tab-beli">
+                        <input type="text" placeholder="Cari Rumah Impian Anda, Contoh: Rumah, Perumahan, Ruko, Tanah">
                     </div>
+
+                    <div class="search-input-group" id="tab-sewa" style="display:none;">
+                        <input type="text" placeholder="Cari Properti Sewa, Contoh: Rumah, Perumahan, Ruko, Tanah">
+                    </div>
+
                     <div class="search-footer">
                         <div>
-                            <strong>Find Out your home's value, instantly</strong><br>
-                            <small>Get a free online estimate of your home's current value in minutes</small>
+                            <strong>Temukan Hunian Impian Anda, Di Sini!!</strong><br>
+                            <small>Dapatkan Estimasi Harga Properti Secara Gratis, Cepat & Akurat Dalam Hitungan
+                                Menit</small>
                         </div>
-                        <button class="btn-valuation">Start Instant Valuation</button>
+                        <button class="btn-valuation">Cek Nilai Properti</button>
                     </div>
                 </div>
             </div>
@@ -215,3 +218,51 @@
         </div>
     </section>
 </main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const tabs = document.querySelectorAll(".search-tabs .tab");
+    const inputBeli = document.querySelector("#tab-beli input");
+    const inputSewa = document.querySelector("#tab-sewa input");
+    const searchButton = document.querySelector(".btn-valuation");
+
+    let activeTab = "beli";
+
+    // === Fungsi pindah tab ===
+    tabs.forEach(tab => {
+        tab.addEventListener("click", function() {
+            tabs.forEach(t => t.classList.remove("active"));
+            this.classList.add("active");
+            activeTab = this.dataset.tab;
+
+            if (activeTab === "beli") {
+                document.getElementById("tab-beli").style.display = "block";
+                document.getElementById("tab-sewa").style.display = "none";
+            } else {
+                document.getElementById("tab-beli").style.display = "none";
+                document.getElementById("tab-sewa").style.display = "block";
+            }
+        });
+    });
+
+    // === Fungsi tombol search ===
+    searchButton.addEventListener("click", function() {
+        let keyword = activeTab === "beli" ? inputBeli.value.trim().toLowerCase() : inputSewa.value
+            .trim().toLowerCase();
+
+        // Map keyword ke kategori
+        let kategori = "properti";
+        if (["rumah"].includes(keyword)) kategori = "rumah";
+        else if (["perumahan"].includes(keyword)) kategori = "perumahan";
+        else if (["ruko"].includes(keyword)) kategori = "ruko";
+        else if (["tanah", "kavling"].includes(keyword)) kategori = "kavling";
+
+        // Redirect sesuai tab
+        if (activeTab === "beli") {
+            window.location.href = "/properti/dijual_search/" + kategori;
+        } else {
+            window.location.href = "/properti/disewa_search/" + kategori;
+        }
+    });
+});
+</script>

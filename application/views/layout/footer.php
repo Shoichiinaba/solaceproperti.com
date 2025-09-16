@@ -65,8 +65,12 @@
                 <ul>
                     <li><a href="#">Tentang Kami</a></li>
                     <li><a href="#">Produk & Layanan</a></li>
-                    <li><a href="#">Partner</a></li>
-                    <li><a href="#">Karir</a></li>
+                    <li><a
+                            href="https://wa.me/6283842901775?text=Hallo%20Solace Properti%2C%20Saya%20ingin%20Iklan%20%20properti%20saya%20...">Partner</a>
+                    </li>
+                    <li><a
+                            href="https://wa.me/6283842901775?text=Hallo%20Solace Properti%2C%20Saya%20ingin%20Mengetahui Info Lowongan%20%20Di Solace Properti%20%20...">Karir</a>
+                    </li>
                     <li><a href="#">Pressroom</a></li>
                 </ul>
             </div>
@@ -75,8 +79,10 @@
             <div class="col-md-3 col-6 footer-column">
                 <h5>Layanan</h5>
                 <ul>
-                    <li><a href="#">Iklankan Properti</a></li>
-                    <li><a href="#">KPR</a></li>
+                    <li><a
+                            href="https://wa.me/6283842901775?text=Hallo%20Solace Properti%2C%20Saya%20ingin%20Iklan%20%20properti%20saya%20...">Iklankan
+                            Properti</a></li>
+                    <li><a href="<?= base_url('Simulasi_KPR'); ?>#kpr">Simulasi KPR</a></li>
                 </ul>
             </div>
 
@@ -86,7 +92,7 @@
                 <ul>
                     <li><a href="#">Kebijakan</a></li>
                     <li><a href="#">Syarat Penggunaan</a></li>
-                    <li><a href="#">Syarat Penggunaan Agen</a></li>
+                    <li><a href="#">Syarat Penggunaan Agent</a></li>
                 </ul>
             </div>
         </div>

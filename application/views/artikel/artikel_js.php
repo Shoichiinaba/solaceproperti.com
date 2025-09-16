@@ -32,7 +32,7 @@ $(document).ready(function() {
 
     function load_data(limit, start) {
         $.ajax({
-            url: "<?php echo base_url(); ?>artikel/get_berita",
+            url: "<?php echo base_url(); ?>Artikel/get_berita",
             method: "POST",
             data: {
                 limit: limit,
@@ -70,6 +70,31 @@ $(document).ready(function() {
         }
     });
 
+});
+
+// code untuk klik menambah viewer artikel
+$(document).on('click', '.add-view-news', function(e) {
+    var id = $(this).data('id-berita');
+
+    $.ajax({
+        url: "<?php echo base_url('Dashboard/add_viewer'); ?>",
+        method: "POST",
+        data: {
+            id_berita: id
+        },
+        success: function(res) {
+            try {
+                var data = JSON.parse(res);
+                if (data.status === 'success') {
+                    console.log("Viewer updated: " + data.data.view_berita);
+                } else {
+                    console.log("Gagal update viewer:", data.message);
+                }
+            } catch (e) {
+                console.error("Invalid JSON:", res);
+            }
+        }
+    });
 });
 </script>
 <!-- Akhir pagination berita -->

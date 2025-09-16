@@ -149,9 +149,6 @@
 </head>
 
 <body>
-    <!-- <div itemprop="image" itemscope="itemscope" itemtype="http://schema.org/ImageObject">
-        <meta content="url_gambar" itemprop='url"/>
-     </div> -->
     <?php $this->load->view('layout/alert/_alert') ?>
     <?php
     if (isset($_view_login) && !empty($_view_login)) {
@@ -249,10 +246,6 @@
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js'></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/html2pdf.js/0.9.1/html2pdf.bundle.js"></script> -->
-    <!-- Daterangepicker -->
-    <!-- <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script> -->
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>

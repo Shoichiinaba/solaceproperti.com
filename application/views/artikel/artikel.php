@@ -79,6 +79,7 @@
     position: relative;
 }
 </style>
+
 <section class="pt-5 mt-3" id="berita">
     <div class="section-header artikel">
 
