@@ -111,9 +111,9 @@
                     </button>
                 </div>
             </div>
-            <div class="row row-btn-vw-next text-center mt-4">
+            <div class="row row-btn-vw-next text-center mt-0">
                 <div class="col">
-                    <a href="#" class="btn-blue">Lihat Selanjutnya</a>
+                    <a href="#" class="btn-lanjut">Lihat Selanjutnya</a>
                 </div>
             </div>
         </div>
@@ -182,9 +182,9 @@
                     </button>
                 </div>
             </div>
-            <div class="row row-btn-vw-next text-center mt-4">
+            <div class="row row-btn-vw-next text-center mt-0">
                 <div class="col">
-                    <a href="#" class="btn-blue">Lihat Selanjutnya</a>
+                    <a href="#" class="btn-lanjut">Lihat Selanjutnya</a>
                 </div>
             </div>
         </div>

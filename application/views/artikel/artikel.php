@@ -86,42 +86,35 @@
         <span><span class="font-auto size-50px">A</span><span class="font-auto size-30px">rtikel</span></span>
     </div>
     <div class="container">
-
         <div class=" row">
             <div class="col-lg-9 col-12">
                 <div class="row">
                     <!-- artikel samping kiri -->
-                    <div class="col-lg-3 col-sm-3">
+                    <div class="col-lg-3 col-4 p-1">
                         <?php foreach ($data_berita_left as $data):
                             $judul_berita = $data['judul_berita'];
                             $tittle_news = preg_replace("![^a-z0-9]+!i", "-", $judul_berita);
                         ?>
                         <div class="card mb-4 shadow-sm border-0 overflow-hidden rounded-3 position-relative">
-                            <a class="text-dark add-view-news text-decoration-none d-block h-100"
+                            <a class="text-dark add-view-news text-decoration-none d-block"
                                 href="<?= base_url('Artikel/page/' . $tittle_news); ?>"
                                 data-id-berita="<?= $data['id_berita']; ?>">
 
-                                <!-- Gambar dengan rounded top -->
                                 <img src="https://admin.solaceproperti.com/upload/article/<?= $data['foto_berita']; ?>"
                                     class="card-img-top img-fluid"
                                     style="border-top-left-radius: 0.75rem; border-top-right-radius: 0.75rem;"
                                     alt="<?= $data['judul_berita']; ?>">
 
-                                <div class="card-body p-3 d-flex flex-column" style="min-height:140px;">
-                                    <!-- Tanggal -->
+                                <!-- min-height dihapus supaya fleksibel -->
+                                <div class="card-body p-3 d-flex flex-column">
                                     <h6 class="mb-1 fw-bold"
                                         style="color:#fa7516; font-size:9px; margin-left:-13px; margin-top:-12px;">
                                         <?= date("d F Y", strtotime($data['tgl_berita'])); ?>
                                     </h6>
-                                    <!-- Judul -->
-                                    <h6 class="card-title fw-bold"
-                                        style="font-size:13px; text-align:left; line-height:1.4; word-break:break-word; hyphens:auto;">
-                                        <?= $data['judul_berita']; ?>
-                                    </h6>
-                                    <!-- Views di kanan bawah -->
+                                    <h6 class="tittle-news resp-tittle"><?= $data['judul_berita']; ?></h6>
                                     <div class="mt-auto text-end" style="margin-right: -9px; margin-bottom: -9px;">
                                         <span class="badge px-2 py-1"
-                                            style="background:#fa7516; border-radius:0.5rem; color:#fff;S">
+                                            style="background:#fa7516; border-radius:0.5rem; color:#fff;">
                                             <?= $data['view_berita']; ?> views
                                         </span>
                                     </div>
@@ -132,25 +125,23 @@
                     </div>
                     <!-- akhir artikel kiri -->
 
-                    <div class="col-lg-9 col-8">
+                    <!-- artikel utama -->
+                    <div class="col-lg-9 col-8 p-1">
                         <?php
-                        $no = 3;
                         foreach ($data_berita_center as $data) {
                             $judul_berita = $data['judul_berita'];
                             $tittle_news = preg_replace("![^a-z0-9]+!i", "-", $judul_berita);
                         ?>
-                        <a class="text-dark add-view-news"
-                            href="<?php echo base_url('Artikel'); ?>/page/<?php echo $tittle_news; ?>"
-                            data-id-berita="<?php echo $data['id_berita']; ?>">
-                            <img src="https://admin.solaceproperti.com/upload/article/<?php echo $data['foto_berita']; ?>"
-                                class="img-fluid border-radius img-berita"
-                                data-id-berita="<?php echo $data['id_berita']; ?>" alt="red sample">
-                            <h3 style="font-family: auto;"><?php echo $data['judul_berita']; ?></h3>
+                        <a class="text-dark add-view-news" href="<?= base_url('Artikel/page/' . $tittle_news); ?>"
+                            data-id-berita="<?= $data['id_berita']; ?>">
+                            <img src="https://admin.solaceproperti.com/upload/article/<?= $data['foto_berita']; ?>"
+                                class="img-fluid border-radius img-berita" alt="<?= $data['judul_berita']; ?>">
+                            <h3 style="font-family: auto;"><?= $data['judul_berita']; ?></h3>
                         </a>
-                        <?php
-                        }
-                        ?>
+                        <?php } ?>
                     </div>
+                    <!-- akhir artikel utama -->
+
                 </div>
                 <hr>
                 <div class="row mt-3">
@@ -200,7 +191,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </section>

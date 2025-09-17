@@ -209,6 +209,28 @@ h6 {
 }
 
 /* page dashboard */
+
+/* kode tombol selanjutnya */
+
+.btn-lanjut {
+    background-color: #06453a;
+    color: #fff;
+     padding: 4px 8px;
+    border-radius: 6px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s ease;
+
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.btn-lanjut:hover {
+    background-color: #046253;
+    color: #fff;
+}
+
+
 .swiper-button-next:after,
 .swiper-button-prev:after {
     font-family: swiper-icons;
@@ -2082,28 +2104,6 @@ span.select2-container {
     left: 4px;
 }
 
-#toggleOn {
-    /* text-decoration: none;
-    font-variant: none;
-    font-weight: bold;
-    color: lightgray;
-    display: block;
-    float: left;
-    padding: 8px 22px;
-    background-color: black; */
-}
-
-#toggleOff {
-    /* text-decoration: none;
-    font-variant: none;
-    font-weight: bold;
-    color: lightgray;
-    display: block;
-    float: right;
-    padding: 8px 22px;
-    background-color: black;
-    margin-left: 3px; */
-}
 
 #rollbox {
     /* height: 200px;
