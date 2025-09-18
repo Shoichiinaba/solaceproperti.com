@@ -1,7 +1,3 @@
-<style>
-
-</style>
-
 <main id="main" class="bg-gardient">
     <section id="home" class=" container mt-5 detail-home">
         <?php foreach ($properti as $data) { ?>
@@ -208,7 +204,7 @@
                         </div>
                         <input type="text" id="jumlahPinjaman" class="form-control" value="">
                     </div>
-                    <div class="d-flex">
+                    <div class="d-flex gap-3">
                         <div class="col-6">
                             <label class="ps-4">Jangka Waktu</label>
                             <div class="input-group mb-1">
