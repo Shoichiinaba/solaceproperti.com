@@ -126,18 +126,15 @@ class Video extends CI_Controller
 
                         <div class="d-flex botleft align-items-baseline">
                             <span class="bor-orange-vi-re box-shadow jenis-penawaran"> ' . htmlspecialchars($video['jenis_penawaran']) . '</span>
-                            <span class="title-tayang main">Tayang sejak ' . date('d F Y', strtotime($video['uploaded'])) . '</span>
+                            <span class="title-tayang main tgl-tyng">Tayang sejak ' . date('d F Y', strtotime($video['uploaded'])) . '</span>
                         </div>
 
                         <div class="i-btn-right-video align-items-baseline">
-                            <ul class="d-grid gap-3 list-none">
+                            <ul class="d-grid gap-3 list-none btn-share">
                                 <li>
                                     <a href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $video['judul_properti']) . '">
                                         <span class="i-bg-orange box-shadow"><i class="bi bi-house-door"></i></span>
                                     </a>
-                                </li>
-                                <li>
-                                    <span class="i-bg-white box-shadow"><i class="fa-solid fa-paper-plane"></i></span>
                                 </li>
                             </ul>
                         </div>

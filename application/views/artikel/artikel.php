@@ -78,6 +78,18 @@
     height: inherit;
     position: relative;
 }
+
+.btn-outline-green {
+    border: 2px solid #01634b;
+    color: #01634b;
+    background: transparent;
+    border-radius: 9px;
+}
+
+.btn-outline-green:hover {
+    background: #01634b;
+    color: #f0d46e;
+}
 </style>
 
 <section class="pt-5 mt-3" id="berita">
@@ -186,8 +198,13 @@
                 <!-- properti -->
                 <?= $properti; ?>
                 <!-- end properti -->
-                <div class="row mt-3">
-                    <div class="col">
+                <div class="row mt-3 mb-3">
+                    <div class="col text-center">
+                        <a href="<?php echo base_url('Properti/jualsewa/rumah'); ?>">
+                            <button type="button" class="btn btn-sm btn-outline-green" style="font-size: 14px;">
+                                <i class="fa-brands fa-product-hunt"></i> Lihat Properti Lainnya >>
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

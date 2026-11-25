@@ -169,7 +169,7 @@ class Artikel extends CI_Controller
 				// Assuming $row contains the property details you want to display
 				$output .= '<div class="img-item col-12 col-md-6 col-lg-4 p-2 pb-3">' .
 					'<div class="populer-container h-100">' .
-					'<a href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $row['judul_properti']) . '/tipe/' . $row['luas_tanah'] . '/' . $row['luas_bangunan'] . '">' .
+					'<a class="view-properti" data-id-properti="' . $row['id_properti'] . '" href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $row['judul_properti']) . '/tipe/' . $row['luas_tanah'] . '/' . $row['luas_bangunan'] . '">' .
 					'<div class="populer-content">' .
 					'<img src="https://admin.solaceproperti.com/upload/gambar_properti/' . htmlspecialchars($firstGambar, ENT_QUOTES, 'UTF-8') . '" class="img-produk-sw">' .
 					$html_ribbon .

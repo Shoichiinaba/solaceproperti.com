@@ -308,16 +308,31 @@ class Properti extends CI_Controller
                     $gambarArray = explode(',', $property['gambar']);
                     $firstGambar = $gambarArray[0];
 
-                    // Format the date
+                    // ==============================
+                    // Format the date (FIXED)
+                    // ==============================
                     $dateString = $property['dibuat'];
-                    $date = DateTime::createFromFormat('d-m-Y', $dateString);
-                    $formattedDate = $date ? $date->format('d') . ' ' . $bulanIndonesia[(int)$date->format('m')] . ' ' . $date->format('Y') : '';
-					$html_ribbon = '';
+                    $date = DateTime::createFromFormat('Y-m-d H:i:s', $dateString);
 
+                    if (!$date) {
+                        $date = DateTime::createFromFormat('Y-m-d', $dateString);
+                    }
+
+                    $formattedDate = $date
+                        ? $date->format('d') . ' ' . $bulanIndonesia[(int)$date->format('m')] . ' ' . $date->format('Y')
+                        : '';
+
+                    // ==============================
+                    // Ribbon (Subsidi status)
+                    // ==============================
+                    $html_ribbon = '';
                     if ($property['status'] == 'Subsidi') {
                         $html_ribbon = '<div class="ribbon ribbon-top-left"><span>' . $property['status'] . '</span></div>';
                     }
 
+                    // ==============================
+                    // Data properti
+                    // ==============================
                     $property_data = [
                         'id_properti' => $property['id_properti'],
                         'status' => $html_ribbon,
@@ -378,7 +393,7 @@ class Properti extends CI_Controller
         // Build and return the HTML string using the provided data
         return '<li class="img-item col-6 p-2 pb-3" data-id="' . $data_properti['id_properti'] . '">' .
             '<div class="populer-container">' .
-            '<a href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $data_properti['judul_properti']) . '/tipe/' . $data_properti['luas_tanah'] . '/' . $data_properti['luas_bangunan'] . '">' .
+            '<a class="view-properti" data-id-properti="' . $data_properti['id_properti'] . '" href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $data_properti['judul_properti']) . '/tipe/' . $data_properti['luas_tanah'] . '/' . $data_properti['luas_bangunan'] . '">' .
             '<div class="populer-content">' .
             '<img src="https://admin.solaceproperti.com/upload/gambar_properti/' . $data_properti['gambar_properti'] . '" class="img-produk-sw">' .
             $data_properti['status'] .

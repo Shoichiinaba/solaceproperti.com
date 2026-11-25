@@ -172,7 +172,7 @@ class Detail extends CI_Controller
                 // Generate HTML for each property
                 $properti_lainnya_html .= '<div class=" col-6 p-2 pb-3">' .
                     '<div class="box-shadow border">' .
-                    '<a href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $property['judul_properti']) . '/tipe/' . $property['luas_tanah'] . '/' . $property['luas_bangunan'] . '" class="text-black">' .
+                    '<a class="view-properti" data-id-properti="' . $property['id_properti'] . '" href="' . base_url('Detail/perum/') . preg_replace("![^a-z0-9]+!i", "-", $property['judul_properti']) . '/tipe/' . $property['luas_tanah'] . '/' . $property['luas_bangunan'] . '" class="text-black">' .
                     '<div class="perum-po-content">' .
                     '<img src="https://admin.solaceproperti.com//upload/gambar_properti/' . $firstGambar . '" class="img-produk">' .
                     '</div>' .

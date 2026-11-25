@@ -1544,11 +1544,6 @@ span.select2-container {
         border-top-right-radius: 12px;
     }
 
-    .title-tayang,
-    .title-new-proyek {
-        font-size: 6px;
-    }
-
     .title-name,
     .title-properti,
     .title-price {
@@ -1748,14 +1743,6 @@ span.select2-container {
     font-size: 30px;
 }
 
-.i-bg-white {
-    background: #ffffff96;
-    padding: 8px 14px 8px 14px;
-    border-radius: 7px;
-    color: #1a44b2;
-    font-size: 27px;
-}
-
 /* page-reel-video mobile */
 
 .btn-share-video {
@@ -1798,83 +1785,6 @@ span.select2-container {
     display: flex;
     transition: 500ms;
 }
-
-@media only screen and (min-width:200px) and (max-width: 768px) and (orientation: portrait) {
-    .text-desk-review {
-        position: absolute;
-        bottom: 34px;
-        background: #0000004f;
-        font-weight: 600;
-        padding: 0.15rem 0.3rem;
-        border-radius: 3px;
-        font-size: 15px;
-        cursor: pointer;
-        z-index: 10;
-        height: auto;
-        align-content: center;
-        text-align: start;
-        max-width: unset;
-        margin-left: 0;
-        padding: 12px 20px 12px 20px;
-        color: white;
-        box-shadow: -1px 8px 20px 20px #00000054;
-        display: ruby;
-    }
-
-    .resp-mobile {
-        display: none;
-    }
-
-    .reel_container-review {
-        position: relative;
-        height: 100vh;
-        width: auto;
-        display: contents;
-    }
-
-    .videoContainer-rv {
-        position: relative;
-        width: fit-content;
-        margin: auto;
-    }
-
-    .swiper-container-re-vi {
-        height: 100vh;
-    }
-
-    .botleft {
-        position: absolute;
-        top: -40%;
-        left: 5%;
-    }
-
-    .toprig {
-        position: absolute;
-        bottom: 85vh;
-        left: 59%;
-    }
-
-    .topleft {
-        position: absolute;
-        left: 8%;
-        bottom: 82vh;
-        font-size: -webkit-xxx-large;
-    }
-
-    .bg-btn-back {
-        color: #ffffff75;
-        font-size: smaller;
-    }
-
-    .i-btn-right-video {
-        display: flex;
-        position: absolute;
-        bottom: 267%;
-        left: 75%;
-    }
-
-}
-
 
 /* //page agen */
 .bg-pg-marketing {

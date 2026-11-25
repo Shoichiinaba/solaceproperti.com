@@ -11,7 +11,7 @@ if (!function_exists('get_banner_properti')) {
         // Get the API key from the config file
         $api_key = $CI->config->item('api_key'); // Assuming it's stored in the config
         // API URL
-        $api_url = 'https://admin.solaceproperti.com//Api/banner';
+        $api_url = 'https://admin.solaceproperti.com/Api/banner';
 
         // Initialize cURL session
         $ch = curl_init();
@@ -34,7 +34,8 @@ if (!function_exists('get_banner_properti')) {
         if (curl_errno($ch)) {
             // Handle error
             $error_msg = curl_error($ch);
-            echo "cURL Error: $error_msg";
+            log_message('error', 'cURL Error (banner): ' . $error_msg);
+            curl_close($ch);
             return false;
         } else {
             // Decode the JSON response into an associative array

@@ -13,7 +13,7 @@ if (!function_exists('get_map_data')) {
         // Get the API key from the config file
         $api_key = $CI->config->item('api_key'); // Assuming it's stored in the config
         // API URL
-        $api_url = 'https://admin.kanpa.co.id/Api/mapdata';
+        $api_url = 'https://admin.solaceproperti.com/Api/mapdata';
 
         // Initialize cURL session
         $ch = curl_init();
@@ -36,8 +36,9 @@ if (!function_exists('get_map_data')) {
         if (curl_errno($ch)) {
             // Handle error
             $error_msg = curl_error($ch);
-            echo "cURL Error: $error_msg";
-            return false;
+            log_message('error', 'cURL Error (map_data): ' . $error_msg);
+            curl_close($ch);
+            return ['error_message' => $error_msg];
         } else {
             // Decode the JSON response into an associative array
             $banner_properti = json_decode($response, true);
@@ -58,7 +59,7 @@ if (!function_exists('get_map_data')) {
         // Load the API key from config
         $api_key = $CI->config->item('api_key');
         $client = new Client();
-        $api_url = 'https://admin.kanpa.co.id/Api/map?id=' . $id;
+        $api_url = 'https://admin.solaceproperti.com/Api/map?id=' . $id;
 
         try {
             $response = $client->request('GET', $api_url, [
@@ -104,7 +105,7 @@ if (!function_exists('get_map_data')) {
         // Load the API key from config
         $api_key = $CI->config->item('api_key');
         $client = new Client();
-        $api_url = 'https://admin.kanpa.co.id/Api/mapcolor';
+        $api_url = 'https://admin.solaceproperti.com/Api/mapcolor';
 
         try {
             $response = $client->request('GET', $api_url, [

@@ -35,7 +35,8 @@ if (!function_exists('get_video_properti')) {
         if (curl_errno($ch)) {
             // Handle error
             $error_msg = curl_error($ch);
-            echo "cURL Error: $error_msg";
+            log_message('error', 'cURL Error (video): ' . $error_msg);
+            curl_close($ch);
             return false;
         } else {
             // Decode the JSON response into an associative array

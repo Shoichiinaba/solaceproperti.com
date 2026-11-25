@@ -206,6 +206,18 @@ figure:hover .img-grid-news {
     padding-top: 34px;
 
 }
+
+.btn-outline-green {
+    border: 2px solid #01634b;
+    color: #01634b;
+    background: transparent;
+    border-radius: 9px;
+}
+
+.btn-outline-green:hover {
+    background: #01634b;
+    color: #f0d46e;
+}
 </style>
 
 
@@ -261,15 +273,12 @@ figure:hover .img-grid-news {
             <div class="col-lg-3 col-12">
                 <?= $properti; ?>
                 <div class="row mt-3">
-                    <div class="col">
-                        <center>
-                            <a href="<?php echo base_url('Produk'); ?>#produk">
-                                <button type="button" id="" class="btn btn-sm btn-outline-info"
-                                    style="font-size: 18px;">
-                                    <i class="fa-brands fa-product-hunt"></i> Lihat Produk Lainnya >>
-                                </button>
-                            </a>
-                        </center>
+                    <div class="col text-center">
+                        <a href="<?php echo base_url('Properti/jualsewa/rumah'); ?>">
+                            <button type="button" class="btn btn-sm btn-outline-green" style="font-size: 14px;">
+                                <i class="fa-brands fa-product-hunt"></i> Lihat Properti Lainnya >>
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>

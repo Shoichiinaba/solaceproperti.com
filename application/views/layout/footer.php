@@ -71,7 +71,6 @@
                     <li><a
                             href="https://wa.me/6283842901775?text=Hallo%20Solace Properti%2C%20Saya%20ingin%20Mengetahui Info Lowongan%20%20Di Solace Properti%20%20...">Karir</a>
                     </li>
-                    <li><a href="#">Pressroom</a></li>
                 </ul>
             </div>
 
